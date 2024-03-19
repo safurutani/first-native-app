@@ -1,29 +1,16 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
-
-import { useColorScheme } from '@/components/useColorScheme';
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { useFonts } from 'expo-font';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import * as SplashScreen from 'expo-splash-screen';
+
+import { useColorScheme } from '@/components/useColorScheme';
 import TabLayout from './(tabs)/_layout';
 import GameScreen from './gamescreen';
 
 const Stack = createStackNavigator();
-
-export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
-} from 'expo-router';
-
-export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: '(tabs)',
-};
-
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
@@ -31,33 +18,32 @@ export default function RootLayout() {
     ...FontAwesome.font,
   });
 
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
-  useEffect(() => {
-    if (error) throw error;
+  React.useEffect(() => {
+    if (error) {
+      console.error(error);
+    }
   }, [error]);
 
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
+  React.useEffect(() => {
+    const hideSplash = async () => {
+      if (loaded) {
+        await SplashScreen.hideAsync();
+      }
+    };
+
+    hideSplash();
   }, [loaded]);
 
   if (!loaded) {
     return null;
   }
 
-  return <RootLayoutNav />;
-}
-
-function RootLayoutNav() {
   return (
     <ThemeProvider value={useColorScheme() === 'dark' ? DarkTheme : DefaultTheme}>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Tabs">
-          <Stack.Screen name="Tabs" component={TabLayout} options={{ headerShown: false }} />
+        <Stack.Navigator initialRouteName="index">
+          <Stack.Screen name="(tabs)" component={TabLayout} options={{ headerShown: false }} />
           <Stack.Screen name="modal" component={GameScreen} options={{ presentation: 'modal' }} />
         </Stack.Navigator>
-      </NavigationContainer>
     </ThemeProvider>
   );
 }
