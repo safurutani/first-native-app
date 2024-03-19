@@ -1,15 +1,18 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-
+import { LetterPyramid } from '@/components/LetterPyramid';
+import { RouteProp } from '@react-navigation/native';
+import { ParamListBase } from '@react-navigation/routers';
 interface GameScreenProps {
   selectedLetters: string;
 }
 
-export default function GameScreen() {
+export default function GameScreen({route}: {route: any}) {
+  const {selectedLetters} = route.params;
   return (
     <View style={styles.container}>
       <Text>Game Screen</Text>
-      {/* Add your game content here */}
+      <LetterPyramid letters={selectedLetters} />
     </View>
   );
 }

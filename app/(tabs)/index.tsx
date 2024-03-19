@@ -1,10 +1,14 @@
-import { Image, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { Image, Keyboard, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { LetterPyramid } from '@/components/LetterPyramid';
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/components/Themed';
 import { FontAwesome } from '@expo/vector-icons';
 import { useState } from 'react';
 import 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import GameScreen from '../GameScreen';
+
 
 
 export default function TabOneScreen() {
@@ -28,6 +32,7 @@ export default function TabOneScreen() {
   const updateSelectedLetters = () => {
     setSelectedLetters(inputLetters + criticalLetter);
   };
+  const navigation = useNavigation<StackNavigationProp<any>>();
   const handleStartSmithing = () => {
     if (inputLetters.length !== 6 || new Set(inputLetters).size !== 6) {
       alert('Please enter 6 unique letters.');
@@ -43,6 +48,8 @@ export default function TabOneScreen() {
     console.log(inputLetters);
     console.log(criticalLetter);
 
+    Keyboard.dismiss();
+    navigation.navigate('GameScreen', {selectedLetters: selectedLetters});
   };
 
   return (
