@@ -4,6 +4,8 @@ import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/components/Themed';
 import { FontAwesome } from '@expo/vector-icons';
 import { useState } from 'react';
+import 'react-native-gesture-handler';
+
 
 export default function TabOneScreen() {
   //display curent date in the Jan 1, 2024 format

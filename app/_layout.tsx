@@ -19,19 +19,17 @@ export default function RootLayout() {
   });
 
   React.useEffect(() => {
-    if (error) {
-      console.error(error);
-    }
-  }, [error]);
-
-  React.useEffect(() => {
-    const hideSplash = async () => {
-      if (loaded) {
-        await SplashScreen.hideAsync();
-      }
+    const loadFonts = async () => {
+      await SplashScreen.hideAsync();
     };
 
-    hideSplash();
+    if (loaded) {
+      loadFonts();
+    }
+
+    return () => {
+      // Cleanup if needed
+    };
   }, [loaded]);
 
   if (!loaded) {
