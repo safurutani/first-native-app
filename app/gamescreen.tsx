@@ -9,6 +9,7 @@ interface GameScreenProps {
 
 export default function GameScreen({route}: {route: any}) {
   const {selectedLetters} = route.params;
+
   return (
     <View style={styles.container}>
       <Text>Game Screen</Text>

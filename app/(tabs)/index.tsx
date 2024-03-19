@@ -1,4 +1,4 @@
-import { Image, Keyboard, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { Image, Keyboard, StyleSheet, TextInput, Pressable } from 'react-native';
 import { LetterPyramid } from '@/components/LetterPyramid';
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/components/Themed';
@@ -20,19 +20,15 @@ export default function TabOneScreen() {
   const [inputLetters, setInputLetters] = useState('');
   const [criticalLetter, setCriticalLetter] = useState('');
   const [selectedLetters, setSelectedLetters] = useState('');
+  const navigation = useNavigation<StackNavigationProp<any>>();
 
   const handleInputChange = (text: string) => {
     setInputLetters(text.toUpperCase());
-    //updateSelectedLetters(text.toUpperCase(), criticalLetter);
   };
   const handleCriticalInputChange = (text: string) => {
     setCriticalLetter(text.toUpperCase());
-    //updateSelectedLetters(inputLetters, text.toUpperCase());
   };
-  const updateSelectedLetters = () => {
-    setSelectedLetters(inputLetters + criticalLetter);
-  };
-  const navigation = useNavigation<StackNavigationProp<any>>();
+  
   const handleStartSmithing = () => {
     if (inputLetters.length !== 6 || new Set(inputLetters).size !== 6) {
       alert('Please enter 6 unique letters.');
@@ -42,8 +38,7 @@ export default function TabOneScreen() {
       alert('Please enter a single critical letter that is unique from the other 6.');
       return;
     }
-    updateSelectedLetters();
-
+    const selectedLetters = inputLetters + criticalLetter;
     console.log(selectedLetters);
     console.log(inputLetters);
     console.log(criticalLetter);
@@ -70,10 +65,10 @@ export default function TabOneScreen() {
         </View>
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.smithButton} onPress={handleStartSmithing}>
+        <Pressable style={styles.smithButton} onPress={handleStartSmithing}>
             <Text>Start Smithing</Text>
             <FontAwesome style={styles.smithButtonImage} name='gavel' size={20}/>
-        </TouchableOpacity>
+        </Pressable>
       </View>
       <View style={styles.container}>
         <LetterPyramid letters={selectedLetters}/>

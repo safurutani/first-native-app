@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { Platform, StyleSheet, Pressable } from 'react-native';
 import { Text, View } from './Themed';
 
 interface LetterTileProps {
@@ -8,11 +8,35 @@ interface LetterTileProps {
   }
 
 export function LetterTile({ letter, critical }: LetterTileProps) {
+    const [isPressed, setIsPressed] = useState(false);
+    const containerStyle = [
+        Platform.OS === 'android' && styles.androidTextContainer,
+    ]
+      const textStyle = [
+        styles.text,
+        Platform.OS === 'android' && styles.androidText,
+        critical ? styles.criticalText : styles.normalText,
+      ];
     return (
         <View>
-            <TouchableOpacity style={[styles.container, critical && styles.critical]}>
-                <Text style={styles.text}>{letter}</Text>
-            </TouchableOpacity>
+            <Pressable 
+            onPressIn={() => setIsPressed(true)}
+            onPressOut={() => setIsPressed(false)}
+            style={({ pressed }) => [
+            styles.container,
+            critical && styles.critical,
+            {
+                opacity: pressed ? 0.5 : 1,
+            },
+            ]}>
+                {Platform.OS === 'android' ? (
+                    <View style={containerStyle}>
+                        <Text style={textStyle}>{letter}</Text>
+                    </View>
+                ) : (
+                    <Text style={textStyle}>{letter}</Text>
+                )}
+            </Pressable>
         </View>
         
     );
@@ -31,13 +55,32 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         margin: 5,
+        
+    },
+    androidTextContainer: {
+        position: 'absolute',
     },
     text: {
         fontSize: 24,
         color: 'black',
-        marginTop: 50
+        backgroundColor: 'transparent',
+        marginTop: 50,
+        lineHeight: 24
     },
     critical: {
         borderBottomColor: 'orange',
-    }
+    },
+    normalText: {
+        backgroundColor: 'gold',
+    },
+    criticalText: {
+        backgroundColor: 'orange',
+    },
+      androidText: {
+        // Android-specific text styles
+        fontSize: 24, // Adjust as needed
+        color: 'black',
+        backgroundColor: 'gold',
+        marginTop: 0,
+      },
 });

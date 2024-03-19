@@ -26,7 +26,7 @@ export default function RootLayout() {
     if (loaded) {
       loadFonts();
     }
-
+    
     return () => {
       // Cleanup if needed
     };
@@ -38,12 +38,10 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={useColorScheme() === 'dark' ? DarkTheme : DefaultTheme}>
-        <Stack.Navigator initialRouteName="index">
-          <Stack.Screen name="(tabs)" component={TabLayout} options={{ headerShown: false }} />
-          <Stack.Screen name="GameScreen" component={GameScreen} initialParams={{ selectedLetters: '' }} />
-
-
-        </Stack.Navigator>
+      <Stack.Navigator initialRouteName="(tabs)">
+        <Stack.Screen name="(tabs)" component={TabLayout} options={{ headerShown: false }} />
+        <Stack.Screen name="GameScreen" component={GameScreen} initialParams={{ selectedLetters: '' }} />
+      </Stack.Navigator>
     </ThemeProvider>
   );
 }
