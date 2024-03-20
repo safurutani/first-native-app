@@ -70,9 +70,6 @@ export default function TabOneScreen() {
             <FontAwesome style={styles.smithButtonImage} name='gavel' size={20}/>
         </Pressable>
       </View>
-      <View style={styles.container}>
-        <LetterPyramid letters={selectedLetters}/>
-      </View>
     </View>
   );
 }

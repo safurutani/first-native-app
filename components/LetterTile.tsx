@@ -5,9 +5,10 @@ import { Text, View } from './Themed';
 interface LetterTileProps {
     letter: string;
     critical?: boolean;
+    onPress: (letter: string) => any;
   }
 
-export function LetterTile({ letter, critical }: LetterTileProps) {
+export function LetterTile({ letter, critical, onPress }: LetterTileProps) {
     const [isPressed, setIsPressed] = useState(false);
     const containerStyle = [
         Platform.OS === 'android' && styles.androidTextContainer,
@@ -20,6 +21,7 @@ export function LetterTile({ letter, critical }: LetterTileProps) {
     return (
         <View>
             <Pressable 
+            onPress={() => onPress(letter)}
             onPressIn={() => setIsPressed(true)}
             onPressOut={() => setIsPressed(false)}
             style={({ pressed }) => [
@@ -55,6 +57,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         margin: 5,
+        userSelect: 'none',
         
     },
     androidTextContainer: {
