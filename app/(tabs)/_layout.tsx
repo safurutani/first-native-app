@@ -10,20 +10,20 @@ const Tab = createBottomTabNavigator();
 export default function TabLayout() {
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ color, size }) => {
-          let iconName;
+    screenOptions={({ route }) => ({
+      tabBarIcon: ({ color, size }) => {
+        let iconName;
 
-          if (route.name === 'index') {
-            iconName = 'plus-square';
-          } else if (route.name === 'two') {
-            iconName = 'archive';
-          }
+        if (route.name === 'index') {
+          iconName = 'plus-square';
+        } else if (route.name === 'two') {
+          iconName = 'archive';
+        }
 
-          return <FontAwesome name='archive' size={size} color={color} />;
-        },
-        tabBarActiveTintColor: Colors.light.tint,
-      })}>
+        return <FontAwesome name='archive' size={size} color={color} />;
+      },
+      tabBarActiveTintColor: Colors.light.tint,
+    })}>
       <Tab.Screen name="index" component={TabOneScreen} options={{ title: 'New WordSmith' }} />
       <Tab.Screen name="two" component={TabTwoScreen} options={{ title: 'Archived Games' }} />
     </Tab.Navigator>

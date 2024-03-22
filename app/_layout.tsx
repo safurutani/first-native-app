@@ -9,6 +9,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useColorScheme } from '@/components/useColorScheme';
 import TabLayout from './(tabs)/_layout';
 import GameScreen from './GameScreen';
+import { GameProvider } from './GameContext';
 
 const Stack = createStackNavigator();
 
@@ -37,11 +38,14 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={useColorScheme() === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack.Navigator initialRouteName="(tabs)">
-        <Stack.Screen name="(tabs)" component={TabLayout} options={{ headerShown: false }} />
-        <Stack.Screen name="GameScreen" component={GameScreen} initialParams={{ selectedLetters: '' }} />
-      </Stack.Navigator>
-    </ThemeProvider>
+    <GameProvider>
+      <ThemeProvider value={useColorScheme() === 'dark' ? DarkTheme : DefaultTheme}>
+        <Stack.Navigator initialRouteName="(tabs)">
+          <Stack.Screen name="(tabs)" component={TabLayout} options={{ headerShown: false }} />
+          <Stack.Screen name="GameScreen" component={GameScreen} initialParams={{ selectedLetters: '' }} />
+        </Stack.Navigator>
+      </ThemeProvider>
+    </GameProvider>
+    
   );
 }

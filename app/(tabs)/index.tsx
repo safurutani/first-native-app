@@ -7,7 +7,9 @@ import { useState } from 'react';
 import 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import GameScreen from '../GameScreen';
+import { GameProvider, useGameContext } from '../GameContext';
+import { GameContext } from '../GameContext';
+
 
 
 
@@ -17,6 +19,7 @@ export default function TabOneScreen() {
   const options: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric', year: 'numeric' };
   const formattedDate: string = currentDate.toLocaleDateString('en-US', options);
   
+  const {addGame, checkDuplicate} = useGameContext();
   const [inputLetters, setInputLetters] = useState('');
   const [criticalLetter, setCriticalLetter] = useState('');
   const [selectedLetters, setSelectedLetters] = useState('');
@@ -42,34 +45,52 @@ export default function TabOneScreen() {
     console.log(selectedLetters);
     console.log(inputLetters);
     console.log(criticalLetter);
+    // Check if the combination already exists
+    if (checkDuplicate(inputLetters, criticalLetter)) {
+      alert('This combination already exists.');
+      return;
+    }
 
+    // Add new game to the context
+    addGame({
+      id: Math.floor(Math.random() * 1000), // You can use a better way to generate IDs
+      score: 0,
+      letters: inputLetters,
+      criticalLetter: criticalLetter,
+      foundWords: [],
+    });
+    setInputLetters('');
+    setCriticalLetter('');
     Keyboard.dismiss();
     navigation.navigate('GameScreen', {selectedLetters: selectedLetters});
   };
 
   return (
     <View style={styles.container}>
-      <View>
-        <Text style={styles.title}>Smithing Materials</Text>
-      </View>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      
-      <View style={styles.searchContainer}>
-        <View style={styles.searchWrapper}>
-          <Text>Enter 6 unique letters:</Text>
-          <TextInput style={styles.letterInput} value={inputLetters} maxLength={6} autoCapitalize='characters'
-        onChangeText={handleInputChange}/>
-          <Text>Enter 1 unique critical letter:</Text>
-          <TextInput style={styles.criticalLetterInput} value={criticalLetter} maxLength={1} autoCapitalize='characters'
-        onChangeText={handleCriticalInputChange}/>
+      <GameProvider>
+        <View>
+          <Text style={styles.title}>Smithing Materials</Text>
         </View>
-      </View>
-      <View style={styles.buttonContainer}>
-        <Pressable style={styles.smithButton} onPress={handleStartSmithing}>
-            <Text>Start Smithing</Text>
-            <FontAwesome style={styles.smithButtonImage} name='gavel' size={20}/>
-        </Pressable>
-      </View>
+        <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+        
+        <View style={styles.searchContainer}>
+          <View style={styles.searchWrapper}>
+            <Text>Enter 6 unique letters:</Text>
+            <TextInput style={styles.letterInput} value={inputLetters} maxLength={6} autoCapitalize='characters'
+          onChangeText={handleInputChange}/>
+            <Text>Enter 1 unique critical letter:</Text>
+            <TextInput style={styles.criticalLetterInput} value={criticalLetter} maxLength={1} autoCapitalize='characters'
+          onChangeText={handleCriticalInputChange}/>
+          </View>
+        </View>
+        <View style={styles.buttonContainer}>
+          <Pressable style={styles.smithButton} onPress={handleStartSmithing}>
+              <Text>Start Smithing</Text>
+              <FontAwesome style={styles.smithButtonImage} name='gavel' size={20}/>
+          </Pressable>
+        </View>
+      </GameProvider>
+      
     </View>
   );
 }
