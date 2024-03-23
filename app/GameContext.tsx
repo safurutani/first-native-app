@@ -2,12 +2,13 @@
 
 import React, { ReactNode, createContext, useContext, useReducer } from 'react';
 
-interface Game {
+export interface Game {
   id: number;
   score: number;
   letters: string;
   criticalLetter: string;
   foundWords: string[];
+  dateCreated: string;
 }
 
 interface GameState {

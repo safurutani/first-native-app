@@ -19,7 +19,7 @@ export default function TabOneScreen() {
   const options: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric', year: 'numeric' };
   const formattedDate: string = currentDate.toLocaleDateString('en-US', options);
   
-  const {addGame, checkDuplicate} = useGameContext();
+  const {state, addGame, checkDuplicate} = useGameContext();
   const [inputLetters, setInputLetters] = useState('');
   const [criticalLetter, setCriticalLetter] = useState('');
   const [selectedLetters, setSelectedLetters] = useState('');
@@ -42,9 +42,6 @@ export default function TabOneScreen() {
       return;
     }
     const selectedLetters = inputLetters + criticalLetter;
-    console.log(selectedLetters);
-    console.log(inputLetters);
-    console.log(criticalLetter);
     // Check if the combination already exists
     if (checkDuplicate(inputLetters, criticalLetter)) {
       alert('This combination already exists.');
@@ -53,11 +50,12 @@ export default function TabOneScreen() {
 
     // Add new game to the context
     addGame({
-      id: Math.floor(Math.random() * 1000), // You can use a better way to generate IDs
+      id: state.games.length + 1,
       score: 0,
       letters: inputLetters,
       criticalLetter: criticalLetter,
       foundWords: [],
+      dateCreated: formattedDate
     });
     setInputLetters('');
     setCriticalLetter('');

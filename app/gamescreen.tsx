@@ -11,10 +11,11 @@ interface GameScreenProps {
 
 export default function GameScreen({route}: {route: any}) {
   const {state, updateGame} = useGameContext();
-  const {selectedLetters} = route.params;
+  const {selectedLetters, game} = route.params;
   const [errorMessage, setErrorMessage] = useState('');
   const [currentWord, setCurrentWord] = useState('');
   const [totalScore, settotalScore] = useState(0);
+  const [points, setPoints] = useState(0);
   const [foundWords, setFoundWords] = useState<string[]>([]);
   const criticalLetter = selectedLetters[selectedLetters.length - 1];
 
@@ -28,29 +29,26 @@ export default function GameScreen({route}: {route: any}) {
     setCurrentWord("");
   }
   const submitWord = () => {
-    console.log(foundWords);
-    console.log(currentWord);
     if (foundWords.some((word) => word === currentWord)) {
       setErrorMessage("You already smithed this word");
     }
     else if (currentWord.length < 4) {
       setErrorMessage("This word is too short");
     } 
-    else if(!currentWord.includes(selectedLetters[selectedLetters.length - 1])) {
+    else if(!currentWord.includes(game.criticalLetter)) {
       setErrorMessage("You did not smith with the critical letter")
     }
     else {
-      const game = state.games.find((g) => g.letters === selectedLetters && g.criticalLetter);
-      
+      scoreWord(currentWord, checkPangram(currentWord));
       setFoundWords([...foundWords, currentWord]);
       setErrorMessage("");
       if (game) {
         const updatedGame = {
           ...game,
-          score: game.score + scoreWord(currentWord, checkPangram(currentWord)),
+          score: game.score + points,
           foundWords: [...game.foundWords, currentWord]
         };
-        updateGame(updatedGame.id, updatedGame);
+        updateGame(game.id, updatedGame);
       }
       else {
         console.error("Game not found for selected letters and critical letters");
@@ -71,7 +69,8 @@ export default function GameScreen({route}: {route: any}) {
     if (pangram) {
       score = score + 7; 
     }
-    settotalScore(totalScore + score);
+    setPoints(score);
+    settotalScore(totalScore + points);
     return score;
   }
   const checkPangram = (word: string) => {
@@ -87,13 +86,13 @@ export default function GameScreen({route}: {route: any}) {
   };
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Score: {totalScore}</Text>
+      <Text style={styles.text}>Score: {game.score}</Text>
       <Text style={styles.error}>{errorMessage}</Text>
       <View>
       <Text style={styles.currentWord}>{currentWord}</Text>
       </View>
       
-      <LetterPyramid letters={selectedLetters} letter={''} handleLetterPress={handleLetterPress}/>
+      <LetterPyramid letters={game.letters + game.criticalLetter} letter={''} handleLetterPress={handleLetterPress}/>
       <View style={styles.buttonContainer}>
         <Pressable style={styles.button} onPress={clearCurrentWord}>
           <Text style={styles.text}>Clear</Text>
@@ -108,7 +107,7 @@ export default function GameScreen({route}: {route: any}) {
         </Pressable>
       </View>
       <View style={styles.foundWordContainer}>
-      {foundWords.map((word, index) => (
+      {game.foundWords.map((word:string, index: number) => (
         <Text style={styles.foundWords} key={index}>
           {word}
         </Text>
