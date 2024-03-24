@@ -70,6 +70,8 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
 
   const updateGame = (id: number, updatedGame: Partial<Game>) => {
     dispatch({ type: 'UPDATE_GAME', payload: { id, updatedGame } });
+    console.log('updated game');
+    console.log(JSON.stringify(updatedGame));
   };
 
   const checkDuplicate = (letters: string, criticalLetter: string) => {

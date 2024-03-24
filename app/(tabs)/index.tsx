@@ -60,6 +60,9 @@ export default function TabOneScreen() {
     setInputLetters('');
     setCriticalLetter('');
     Keyboard.dismiss();
+    if (newGame) {
+      
+    }
     navigation.navigate('GameScreen', {selectedLetters: inputLetters + criticalLetter, game: newGame});
   };
 

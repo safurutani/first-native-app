@@ -40,15 +40,18 @@ export default function GameScreen({route}: {route: any}) {
     }
     else {
       scoreWord(currentWord, checkPangram(currentWord));
-      setFoundWords([...foundWords, currentWord]);
+      setFoundWords(prevFoundWords => [...prevFoundWords, currentWord]);
       setErrorMessage("");
+      const updatedFoundWords = [...foundWords, currentWord];
       if (game) {
         const updatedGame = {
           ...game,
-          score: game.score + points,
-          foundWords: [...game.foundWords, currentWord]
+          score: totalScore,
+          foundWords: updatedFoundWords
         };
+        console.log(game.foundWords);
         updateGame(game.id, updatedGame);
+        
       }
       else {
         console.error("Game not found for selected letters and critical letters");
@@ -70,7 +73,7 @@ export default function GameScreen({route}: {route: any}) {
       score = score + 7; 
     }
     setPoints(score);
-    settotalScore(totalScore + points);
+    settotalScore(totalScore + score);
     return score;
   }
   const checkPangram = (word: string) => {
@@ -82,13 +85,14 @@ export default function GameScreen({route}: {route: any}) {
         isPangram = false;
       }
     });
+    console.log(isPangram);
     return isPangram;
   };
   return (
     <View style={styles.container}>
       {game && (
         <>
-          <Text style={styles.text}>Score: {game.score}</Text>
+          <Text style={styles.text}>Score: {totalScore}</Text>
           <Text style={styles.error}>{errorMessage}</Text>
           <View>
           <Text style={styles.currentWord}>{currentWord}</Text>
@@ -109,7 +113,7 @@ export default function GameScreen({route}: {route: any}) {
             </Pressable>
           </View>
           <View style={styles.foundWordContainer}>
-            {game.foundWords.map((word:string, index: number) => (
+            {foundWords.map((word:string, index: number) => (
               <Text style={styles.foundWords} key={index}>
                 {word}
               </Text>
