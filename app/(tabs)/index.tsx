@@ -32,7 +32,7 @@ export default function TabOneScreen() {
     setCriticalLetter(text.toUpperCase());
   };
   
-  const handleStartSmithing = () => {
+  const handleStartSmithing = async () => {
     if (inputLetters.length !== 6 || new Set(inputLetters).size !== 6) {
       alert('Please enter 6 unique letters.');
       return;
@@ -41,26 +41,26 @@ export default function TabOneScreen() {
       alert('Please enter a single critical letter that is unique from the other 6.');
       return;
     }
-    const selectedLetters = inputLetters + criticalLetter;
+    
     // Check if the combination already exists
     if (checkDuplicate(inputLetters, criticalLetter)) {
       alert('This combination already exists.');
       return;
     }
-
     // Add new game to the context
-    addGame({
+    const newGame = {
       id: state.games.length + 1,
       score: 0,
       letters: inputLetters,
       criticalLetter: criticalLetter,
       foundWords: [],
       dateCreated: formattedDate
-    });
+    };
+    addGame(newGame);
     setInputLetters('');
     setCriticalLetter('');
     Keyboard.dismiss();
-    navigation.navigate('GameScreen', {selectedLetters: selectedLetters});
+    navigation.navigate('GameScreen', {selectedLetters: inputLetters + criticalLetter, game: newGame});
   };
 
   return (

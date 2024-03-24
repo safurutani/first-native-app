@@ -86,34 +86,38 @@ export default function GameScreen({route}: {route: any}) {
   };
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Score: {game.score}</Text>
-      <Text style={styles.error}>{errorMessage}</Text>
-      <View>
-      <Text style={styles.currentWord}>{currentWord}</Text>
-      </View>
-      
-      <LetterPyramid letters={game.letters + game.criticalLetter} letter={''} handleLetterPress={handleLetterPress}/>
-      <View style={styles.buttonContainer}>
-        <Pressable style={styles.button} onPress={clearCurrentWord}>
-          <Text style={styles.text}>Clear</Text>
-        </Pressable>
-        <Pressable style={styles.button} onPress={deleteLetter}>
-          <Text style={styles.text}>Delete</Text>
-        </Pressable>
-      </View>
-      <View>
-        <Pressable style={styles.button} onPress={submitWord}>
-          <Text style={styles.text}>Submit</Text>
-        </Pressable>
-      </View>
-      <View style={styles.foundWordContainer}>
-      {game.foundWords.map((word:string, index: number) => (
-        <Text style={styles.foundWords} key={index}>
-          {word}
-        </Text>
-      ))}
-        
-      </View>
+      {game && (
+        <>
+          <Text style={styles.text}>Score: {game.score}</Text>
+          <Text style={styles.error}>{errorMessage}</Text>
+          <View>
+          <Text style={styles.currentWord}>{currentWord}</Text>
+          </View>
+          
+          <LetterPyramid letters={game.letters + game.criticalLetter} letter={''} handleLetterPress={handleLetterPress}/>
+          <View style={styles.buttonContainer}>
+            <Pressable style={styles.button} onPress={clearCurrentWord}>
+              <Text style={styles.text}>Clear</Text>
+            </Pressable>
+            <Pressable style={styles.button} onPress={deleteLetter}>
+              <Text style={styles.text}>Delete</Text>
+            </Pressable>
+          </View>
+          <View>
+            <Pressable style={styles.button} onPress={submitWord}>
+              <Text style={styles.text}>Submit</Text>
+            </Pressable>
+          </View>
+          <View style={styles.foundWordContainer}>
+            {game.foundWords.map((word:string, index: number) => (
+              <Text style={styles.foundWords} key={index}>
+                {word}
+              </Text>
+            ))}
+            
+          </View>
+        </>
+      )}   
     </View>
   );
 }
