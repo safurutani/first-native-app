@@ -7,9 +7,11 @@ import { useGameContext } from '../GameContext';
 import { ArchivedGame } from '@/components/ArchivedGame';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
 
 export default function TabTwoScreen() {
-  const {state} = useGameContext();
+  const state = useSelector((state: RootState) => state.game);
   const navigation = useNavigation<StackNavigationProp<any>>();
   return (
     <View style={styles.container}>

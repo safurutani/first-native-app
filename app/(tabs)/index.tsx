@@ -9,7 +9,9 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { GameProvider, useGameContext } from '../GameContext';
 import { GameContext } from '../GameContext';
-
+import { addGame } from '../reducers';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../store';
 
 
 
@@ -19,14 +21,16 @@ export default function TabOneScreen() {
   const options: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric', year: 'numeric' };
   const formattedDate: string = currentDate.toLocaleDateString('en-US', options);
   
-  const {state, addGame, checkDuplicate} = useGameContext();
   const [inputLetters, setInputLetters] = useState('');
   const [criticalLetter, setCriticalLetter] = useState('');
   const [selectedLetters, setSelectedLetters] = useState('');
   const navigation = useNavigation<StackNavigationProp<any>>();
-
+  const state = useSelector((state: RootState) => state.game);
+  const dispatch = useDispatch();
+  
   const handleInputChange = (text: string) => {
     setInputLetters(text.toUpperCase());
+    console.log(JSON.stringify(state.games))
   };
   const handleCriticalInputChange = (text: string) => {
     setCriticalLetter(text.toUpperCase());
@@ -42,11 +46,6 @@ export default function TabOneScreen() {
       return;
     }
     
-    // Check if the combination already exists
-    if (checkDuplicate(inputLetters, criticalLetter)) {
-      alert('This combination already exists.');
-      return;
-    }
     // Add new game to the context
     const newGame = {
       id: state.games.length + 1,
@@ -56,13 +55,10 @@ export default function TabOneScreen() {
       foundWords: [],
       dateCreated: formattedDate
     };
-    addGame(newGame);
+    dispatch(addGame(newGame));
     setInputLetters('');
     setCriticalLetter('');
     Keyboard.dismiss();
-    if (newGame) {
-      
-    }
     navigation.navigate('GameScreen', {selectedLetters: inputLetters + criticalLetter, game: newGame});
   };
 

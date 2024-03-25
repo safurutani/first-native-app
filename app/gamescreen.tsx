@@ -3,21 +3,24 @@ import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { useState } from 'react';
 import { LetterPyramid } from '@/components/LetterPyramid';
 import { useGameContext } from './GameContext'
+import { UseDispatch, useDispatch, useSelector } from 'react-redux';
+import { RootState } from './store';
+import { Game, addGame, updateGame } from './reducers'
 
 interface GameScreenProps {
-  selectedLetters: string; 
-  letter: any
+  route: any
 }
 
 export default function GameScreen({route}: {route: any}) {
-  const {state, updateGame} = useGameContext();
   const {selectedLetters, game} = route.params;
   const [errorMessage, setErrorMessage] = useState('');
   const [currentWord, setCurrentWord] = useState('');
   const [totalScore, setTotalScore] = useState(0);
   const [foundWords, setFoundWords] = useState<string[]>([]);
   const criticalLetter = selectedLetters[selectedLetters.length - 1];
-
+  const dispatch = useDispatch();
+  const state = useSelector((state: RootState) => state.game);
+  
   const handleLetterPress = (letter: any) => {
     setCurrentWord((prev) => prev + letter);
   };
@@ -50,34 +53,37 @@ export default function GameScreen({route}: {route: any}) {
     }
   
     const wordScore = scoreWord(currentWord, checkPangram(currentWord));
-    setFoundWords(prevFoundWords => [...prevFoundWords, currentWord]);
-    setTotalScore(prevTotalScore => prevTotalScore + wordScore);
+    //setFoundWords(prevFoundWords => [...prevFoundWords, currentWord]);
+    //setTotalScore(prevTotalScore => prevTotalScore + wordScore);
   
-    const updatedFoundWords = [...foundWords, currentWord];
+    //const updatedFoundWords = [...foundWords, currentWord];
     const updatedGame = {
       ...game,
-      score: totalScore + wordScore,
-      foundWords: updatedFoundWords
+      score: game.score + wordScore,
+      foundWords: [...game.foundWords, currentWord]
     };   
   
-    updateGame(game.id, updatedGame);
+    dispatch(updateGame(updatedGame));
     setErrorMessage("");
     console.log(state.games); 
     setCurrentWord("");
   };
-  const scoreWord = (word: string, pangram: boolean) => {
-    var score = word.length;
+  const scoreWord = (word: string, pangram: boolean) => {  
     if (word.length == 4) {
-      score = 1;
+      return 1;
     }
-    if (pangram) {
-      score += 7; 
+    else {
+      var score = word.length;
+      if (pangram) {
+        score += 7; 
+      }
     }
     console.log(`score: ${score}`)
     return score;
   }
   const checkPangram = (word: string) => {
     const letterArray = (game.letters + game.criticalLetter).split("");
+    /*
     var isPangram = true;
     console.log(word);
     letterArray.forEach((char: string) => {
@@ -87,18 +93,20 @@ export default function GameScreen({route}: {route: any}) {
     });
     console.log(isPangram);
     return isPangram;
+    */
+    return letterArray.every((char: string) => word.includes(char));
   };
   return (
     <View style={styles.container}>
       {game && (
         <>
-          <Text style={styles.text}>Score: {state.games[game.id].score}</Text>
+          <Text style={styles.text}>Score: {game.score}</Text>
           <Text style={styles.error}>{errorMessage}</Text>
           <View>
           <Text style={styles.currentWord}>{currentWord}</Text>
           </View>
           
-          <LetterPyramid letters={state.games[game.id].letters + state.games[game.id].criticalLetter} letter={''} handleLetterPress={handleLetterPress}/>
+          <LetterPyramid letters={game.letters + game.criticalLetter} letter={''} handleLetterPress={handleLetterPress}/>
           <View style={styles.buttonContainer}>
             <Pressable style={styles.button} onPress={clearCurrentWord}>
               <Text style={styles.text}>Clear</Text>
@@ -113,7 +121,7 @@ export default function GameScreen({route}: {route: any}) {
             </Pressable>
           </View>
           <View style={styles.foundWordContainer}>
-            {state.games[game.id].foundWords.map((word:string, index: number) => (
+            {game.foundWords.map((word:string, index: number) => (
               <Text style={styles.foundWords} key={index}>
                 {word}
               </Text>

@@ -10,6 +10,8 @@ import { useColorScheme } from '@/components/useColorScheme';
 import TabLayout from './(tabs)/_layout';
 import GameScreen from './GameScreen';
 import { GameProvider } from './GameContext';
+import { Provider } from 'react-redux';
+import store from './store';
 
 const Stack = createStackNavigator();
 
@@ -39,12 +41,16 @@ export default function RootLayout() {
 
   return (
     <GameProvider>
-      <ThemeProvider value={useColorScheme() === 'dark' ? DarkTheme : DefaultTheme}>
-        <Stack.Navigator initialRouteName="(tabs)">
-          <Stack.Screen name="(tabs)" component={TabLayout} options={{ headerShown: false }} />
-          <Stack.Screen name="GameScreen" component={GameScreen} initialParams={{ selectedLetters: '' }} />
-        </Stack.Navigator>
-      </ThemeProvider>
+      <Provider store={store}>
+
+      
+        <ThemeProvider value={useColorScheme() === 'dark' ? DarkTheme : DefaultTheme}>
+          <Stack.Navigator initialRouteName="(tabs)">
+            <Stack.Screen name="(tabs)" component={TabLayout} options={{ headerShown: false }} />
+            <Stack.Screen name="GameScreen" component={GameScreen} initialParams={{ selectedLetters: '' }} />
+          </Stack.Navigator>
+        </ThemeProvider>
+      </Provider>
     </GameProvider>
     
   );
