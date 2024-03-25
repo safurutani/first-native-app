@@ -19,7 +19,10 @@ export default function TabTwoScreen() {
         data={state.games}
         keyExtractor={(item) => item.id.toString()} 
         renderItem={({ item}) => (
-        <Pressable onPress={()=> navigation.navigate('GameScreen', {game: item})}>
+        <Pressable onPress={()=> {
+          navigation.navigate('GameScreen', {game: item});
+          console.log(JSON.stringify(item));
+          }}>
           <ArchivedGame game={item} />
         </Pressable>
         )}

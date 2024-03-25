@@ -55,17 +55,16 @@ const gameReducer = (state: GameState, action: { type: string; payload: any }): 
   }
 };
 
-let nextId = 1;
 export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(gameReducer, initialState);
 
   const addGame = (game: Game) => {
     dispatch({ type: 'ADD_GAME', payload: { ...game, id: state.games.length + 1 } });
-    nextId++;
   };
 
   const removeGame = (id: number) => {
     dispatch({ type: 'REMOVE_GAME', payload: id });
+    
   };
 
   const updateGame = (id: number, updatedGame: Partial<Game>) => {

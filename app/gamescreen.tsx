@@ -14,8 +14,7 @@ export default function GameScreen({route}: {route: any}) {
   const {selectedLetters, game} = route.params;
   const [errorMessage, setErrorMessage] = useState('');
   const [currentWord, setCurrentWord] = useState('');
-  const [totalScore, settotalScore] = useState(0);
-  const [points, setPoints] = useState(0);
+  const [totalScore, setTotalScore] = useState(0);
   const [foundWords, setFoundWords] = useState<string[]>([]);
   const criticalLetter = selectedLetters[selectedLetters.length - 1];
 
@@ -29,55 +28,56 @@ export default function GameScreen({route}: {route: any}) {
     setCurrentWord("");
   }
   const submitWord = () => {
+    console.log("Game:", game);
+    if (!game) {
+      console.error("Game not found for selected letters and critical letters");
+      return;
+    }
+  
     if (foundWords.some((word) => word === currentWord)) {
       setErrorMessage("You already smithed this word");
+      return;
     }
-    else if (currentWord.length < 4) {
+  
+    if (currentWord.length < 4) {
       setErrorMessage("This word is too short");
-    } 
-    else if(!currentWord.includes(game.criticalLetter)) {
-      setErrorMessage("You did not smith with the critical letter")
+      return;
     }
-    else {
-      scoreWord(currentWord, checkPangram(currentWord));
-      setFoundWords(prevFoundWords => [...prevFoundWords, currentWord]);
-      setErrorMessage("");
-      const updatedFoundWords = [...foundWords, currentWord];
-      if (game) {
-        const updatedGame = {
-          ...game,
-          score: totalScore,
-          foundWords: updatedFoundWords
-        };
-        console.log(game.foundWords);
-        updateGame(game.id, updatedGame);
-        
-      }
-      else {
-        console.error("Game not found for selected letters and critical letters");
-      }
-      
-    } 
+  
+    if (!currentWord.includes(game.criticalLetter)) {
+      setErrorMessage("You did not smith with the critical letter");
+      return;
+    }
+  
+    const wordScore = scoreWord(currentWord, checkPangram(currentWord));
+    setFoundWords(prevFoundWords => [...prevFoundWords, currentWord]);
+    setTotalScore(prevTotalScore => prevTotalScore + wordScore);
+  
+    const updatedFoundWords = [...foundWords, currentWord];
+    const updatedGame = {
+      ...game,
+      score: totalScore + wordScore,
+      foundWords: updatedFoundWords
+    };   
+  
+    updateGame(game.id, updatedGame);
+    setErrorMessage("");
+    console.log(state.games); 
     setCurrentWord("");
   };
   const scoreWord = (word: string, pangram: boolean) => {
-    const size = word.length;
-    var score = 0;
-    if (size == 4) {
+    var score = word.length;
+    if (word.length == 4) {
       score = 1;
     }
-    else {
-      score = size;
-    }
     if (pangram) {
-      score = score + 7; 
+      score += 7; 
     }
-    setPoints(score);
-    settotalScore(totalScore + score);
+    console.log(`score: ${score}`)
     return score;
   }
   const checkPangram = (word: string) => {
-    const letterArray = selectedLetters.split("");
+    const letterArray = (game.letters + game.criticalLetter).split("");
     var isPangram = true;
     console.log(word);
     letterArray.forEach((char: string) => {
@@ -92,13 +92,13 @@ export default function GameScreen({route}: {route: any}) {
     <View style={styles.container}>
       {game && (
         <>
-          <Text style={styles.text}>Score: {totalScore}</Text>
+          <Text style={styles.text}>Score: {state.games[game.id].score}</Text>
           <Text style={styles.error}>{errorMessage}</Text>
           <View>
           <Text style={styles.currentWord}>{currentWord}</Text>
           </View>
           
-          <LetterPyramid letters={game.letters + game.criticalLetter} letter={''} handleLetterPress={handleLetterPress}/>
+          <LetterPyramid letters={state.games[game.id].letters + state.games[game.id].criticalLetter} letter={''} handleLetterPress={handleLetterPress}/>
           <View style={styles.buttonContainer}>
             <Pressable style={styles.button} onPress={clearCurrentWord}>
               <Text style={styles.text}>Clear</Text>
@@ -113,7 +113,7 @@ export default function GameScreen({route}: {route: any}) {
             </Pressable>
           </View>
           <View style={styles.foundWordContainer}>
-            {foundWords.map((word:string, index: number) => (
+            {state.games[game.id].foundWords.map((word:string, index: number) => (
               <Text style={styles.foundWords} key={index}>
                 {word}
               </Text>
