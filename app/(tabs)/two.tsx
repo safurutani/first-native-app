@@ -3,7 +3,6 @@ import { StyleSheet, FlatList, Pressable, ListRenderItem } from 'react-native';
 
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/components/Themed';
-import { useGameContext } from '../GameContext';
 import { ArchivedGame } from '@/components/ArchivedGame';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
@@ -19,7 +18,7 @@ export default function TabTwoScreen() {
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <FlatList 
         data={state.games}
-        keyExtractor={(item) => item.id.toString()} 
+        keyExtractor={(item, index) => index.toString()} 
         renderItem={({ item}) => (
         <Pressable onPress={()=> {
           navigation.navigate('GameScreen', {game: item});

@@ -1,45 +1,89 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { combineReducers } from '@reduxjs/toolkit';
 
 export interface Game {
-    id: number,
-    score: number;
-    letters: string;
-    criticalLetter: string;
-    foundWords: string[];
-    dateCreated: string;
+  id: number;
+  score: number;
+  letters: string;
+  criticalLetter: string;
+  foundWords: string[];
+  dateCreated: string;
 }
-interface GameState {
-  games: Game[],
-};
+
+export interface GameState {
+  games: Game[];
+}
+
+export const ADD_GAME = 'ADD_GAME';
+export const REMOVE_GAME = 'REMOVE_GAME';
+export const UPDATE_SCORE = 'UPDATE_SCORE';
+export const UPDATE_FOUND_WORDS = 'UPDATE_FOUND_WORDS';
+
+export interface AddGameAction {
+  type: typeof ADD_GAME;
+  payload: Game;
+}
+
+export interface RemoveGameAction {
+  type: typeof REMOVE_GAME;
+  payload: number;
+}
+
+export interface UpdateScoreAction {
+  type: typeof UPDATE_SCORE;
+  payload: { id: number; score: number };
+}
+
+export interface UpdateFoundWordsAction {
+  type: typeof UPDATE_FOUND_WORDS;
+  payload: { id: number; foundWords: string[] };
+}
+
+export type GameAction =
+  | AddGameAction
+  | RemoveGameAction
+  | UpdateScoreAction
+  | UpdateFoundWordsAction;
+
 const initialState: GameState = {
-    games: [],
-}
+  games: [],
+};
 
-const gameSlice = createSlice({
-    initialState,
-    reducers: {
-        addGame(state, action: PayloadAction<Game>) {
-            if (!state.games.some((game) => game.letters === action.payload.letters && game.criticalLetter === action.payload.criticalLetter)) {
-                state.games.push(action.payload);
-            }
-            else {
-                alert("A game with this combination already exists.")
-                return;
-            }
-        },
-        removeGame(state, action: PayloadAction<number>) {
-            state.games = state.games.filter((game) => game.id !== action.payload);
-        },
-        updateGame(state, action: PayloadAction<Game>) {
-            const index = state.games.findIndex((game) => game.id === action.payload.id);
-            if (index !== -1) {
-                state.games[index] = action.payload;
-            }
-        }
-        // Add other reducers here
-    },
-    name: 'gameList'
+const gameReducer = (state: GameState = initialState, action: GameAction): GameState => {
+  switch (action.type) {
+    case ADD_GAME:
+      console.log(state.games);
+      return {
+        ...state,
+        games: [...state.games, action.payload],
+      };
+    case REMOVE_GAME:
+      return {
+        ...state,
+        games: state.games.filter((game) => game.id !== action.payload),
+      };
+      case UPDATE_SCORE:
+        const { id: scoreId, score } = action.payload;
+        return {
+          ...state,
+          games: state.games.map((game) =>
+            game.id === scoreId ? { ...game, score: score } : game
+          ),
+        };
+      case UPDATE_FOUND_WORDS:
+        const { id: foundWordsId, foundWords } = action.payload;
+        return {
+          ...state,
+          games: state.games.map((game) =>
+            game.id === foundWordsId ? { ...game, foundWords: foundWords } : game
+          ),
+        };
+    default:
+      console.log(state.games);
+      return state;
+  }
+};
+
+export const rootReducer = combineReducers({
+  game: gameReducer,
 });
-
-export const { addGame, removeGame, updateGame } = gameSlice.actions;
-export default gameSlice.reducer;
+export default rootReducer;

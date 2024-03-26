@@ -1,11 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import gameReducer from './reducers'
+import {rootReducer} from './reducers'
 
 const store = configureStore({
-  reducer: {
-    game: gameReducer,
-    // Add other reducers here
-  },
+  reducer: rootReducer
 });
-export type RootState = ReturnType<typeof store.getState>;
+export type RootState = ReturnType<typeof rootReducer>;
 export default store;

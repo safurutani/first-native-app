@@ -1,7 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { View, Text } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import { Game, useGameContext } from '@/app/GameContext';
 
 interface ArchivedGameProps {
     game: {
@@ -15,9 +14,7 @@ interface ArchivedGameProps {
 }
 
 export const ArchivedGame: React.FC<ArchivedGameProps> = ({ game }) => {
-    const { id, score, letters, criticalLetter, foundWords, dateCreated } = game;
-    const {state} = useGameContext();
-    console.log(score);
+    const { id, score, letters, criticalLetter, foundWords=[], dateCreated } = game;
     return (
         <View style={styles.container}>
             <Text style={styles.date}>{dateCreated}</Text>

@@ -9,7 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { GameProvider, useGameContext } from '../GameContext';
 import { GameContext } from '../GameContext';
-import { addGame } from '../reducers';
+import { ADD_GAME } from '../reducers';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
 
@@ -30,7 +30,6 @@ export default function TabOneScreen() {
   
   const handleInputChange = (text: string) => {
     setInputLetters(text.toUpperCase());
-    console.log(JSON.stringify(state.games))
   };
   const handleCriticalInputChange = (text: string) => {
     setCriticalLetter(text.toUpperCase());
@@ -55,7 +54,8 @@ export default function TabOneScreen() {
       foundWords: [],
       dateCreated: formattedDate
     };
-    dispatch(addGame(newGame));
+    dispatch({type: ADD_GAME, payload: newGame});
+    console.log(state.games);
     setInputLetters('');
     setCriticalLetter('');
     Keyboard.dismiss();
