@@ -48,12 +48,15 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     borderWidth: 1,
-    borderColor: 'black',
+    borderColor: '#006B61',
     borderRadius: 5,
     height: '85%',
     backgroundColor: 'white',
     marginVertical: 5,
-    width: 260
+    width: 260,
+    shadowColor: '#006B61',
+    shadowRadius: 8,
+    shadowOpacity: 0.5,
   },
   title: {
     fontSize: 20,

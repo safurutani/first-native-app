@@ -4,6 +4,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
 import TabOneScreen from '.';
 import TabTwoScreen from './two';
+import { ArchivedHeader } from '@/components/ArchivedHeader';
 
 const Tab = createBottomTabNavigator();
 
@@ -22,9 +23,10 @@ export default function TabLayout() {
       },
       tabBarActiveTintColor: Colors.light.tint,
       headerTitleAlign: 'center',
+      
     })}>
-      <Tab.Screen name="index" component={TabOneScreen} options={{ title: 'New WordSmith' }} />
-      <Tab.Screen name="two" component={TabTwoScreen} options={{ title: 'Archived Games' }} />
+      <Tab.Screen name="index" component={TabOneScreen} options={{ title: 'New WordSmith'}} />
+      <Tab.Screen name="two" component={TabTwoScreen} options={{ title: 'Archived Games' , headerTitle: () => <ArchivedHeader /> }} />
     </Tab.Navigator>
   );
 }

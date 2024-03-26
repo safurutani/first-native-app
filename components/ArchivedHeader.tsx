@@ -7,14 +7,14 @@ export const ArchivedHeader = () => {
   
     return (
       <View style={styles.headerContainer}>
-        <Text style={styles.headerTitle}>{state.games.length} Games</Text>
+        <Text style={styles.headerTitle}>Archived Games</Text>
+        <Text style={styles.numGames}>{state.games.length} Games</Text>
       </View>
     );
   };
   
   const styles = StyleSheet.create({
     headerContainer: {
-      flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: 'white',
@@ -25,5 +25,9 @@ export const ArchivedHeader = () => {
       fontWeight: 'bold',
       color: '#333',
     },
+    numGames: {
+        fontSize: 14,
+        color:'#333',
+    }
   });
   

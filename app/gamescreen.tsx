@@ -136,7 +136,7 @@ export default function GameScreen({route}: {route: any}) {
           <View style={styles.foundWordContainer}>
             {foundWords.map((word:string, index: number) => (
               <Text style={styles.foundWords} key={index}>
-                {word}
+                {word}{'  \u2022 '}
               </Text>
             ))}
             
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: 24,
-    
+    backgroundColor: '#649B92'
   },
   scoreContainer: {
     display: 'flex',
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     justifyContent: 'center',
     userSelect: 'none',
-    backgroundColor: '#C2FCF3'
+    backgroundColor: 'white'
   },
   buttonContainer: {
     display: 'flex',
@@ -214,6 +214,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginTop: 20,
     minHeight: 40,
-    backgroundColor: '#C2FCF3'
+    backgroundColor: 'white'
   }
 });
