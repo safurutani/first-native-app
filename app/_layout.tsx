@@ -10,7 +10,6 @@ import TabLayout from './(tabs)/_layout';
 import GameScreen from './GameScreen';
 import { Provider } from 'react-redux';
 import store from './store';
-import { ArchivedHeader } from '@/components/ArchivedHeader'
 const Stack = createStackNavigator();
 
 export default function RootLayout() {
@@ -41,7 +40,7 @@ export default function RootLayout() {
     <Provider store={store}>
       <ThemeProvider value={useColorScheme() === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack.Navigator initialRouteName="(tabs)">
-          <Stack.Screen name="(tabs)" component={TabLayout} options={{ headerShown: false, headerTitle: () => <ArchivedHeader /> }} />
+          <Stack.Screen name="(tabs)" component={TabLayout} options={{ headerShown: false}} />
           <Stack.Screen name="GameScreen" component={GameScreen} initialParams={{ selectedLetters: '' }} />
         </Stack.Navigator>
       </ThemeProvider>
