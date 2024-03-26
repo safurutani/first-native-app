@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { LetterPyramid } from '@/components/LetterPyramid';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from './store';
@@ -15,11 +15,24 @@ export default function GameScreen({route}: {route: any}) {
   const [errorMessage, setErrorMessage] = useState('');
   const [currentWord, setCurrentWord] = useState('');
   const [totalScore, setTotalScore] = useState(game.score);
+  const [points, setPoints] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
   const [foundWords, setFoundWords] = useState<string[]>(game.foundWords);
   const criticalLetter = selectedLetters[selectedLetters.length - 1];
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state);
   
+  useEffect(() => {
+    if (points !== 0) {
+      setIsVisible(true);
+      const timeout = setTimeout(() => {
+        setIsVisible(false);
+      }, 2000); // 2000 milliseconds (2 seconds)
+      return () => clearTimeout(timeout); // Cleanup function to clear the timeout
+    }
+  }, [points]);
+
   const handleLetterPress = (letter: any) => {
     setCurrentWord((prev) => prev + letter);
   };
@@ -55,6 +68,9 @@ export default function GameScreen({route}: {route: any}) {
     const wordScore = scoreWord(currentWord, checkPangram(currentWord));
     const updatedFoundWords = [...foundWords, currentWord];
     const updatedTotalScore = totalScore + wordScore;
+    setTimeout(() => {
+      setIsVisible(false);
+    }, 5000);
     setFoundWords(updatedFoundWords);
     setTotalScore(updatedTotalScore);
   
@@ -63,17 +79,26 @@ export default function GameScreen({route}: {route: any}) {
     setErrorMessage("");
     setCurrentWord("");
   };
-  const scoreWord = (word: string, pangram: boolean) => {  
+  const scoreWord = (word: string, pangram: boolean) => { 
+    var score = word.length;
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    } 
     if (word.length == 4) {
-      return 1;
+      score = 1;
+      setPoints(1);
     }
     else {
-      var score = word.length;
       if (pangram) {
         score += 7; 
       }
     }
+    const newTimeoutId = setTimeout(() => {
+      setPoints(0); // Reset points after timeout
+    }, 3000); // Timeout duration in milliseconds
+    setTimeoutId(newTimeoutId);
     console.log(`score: ${score}`)
+    setPoints(score);
     return score;
   }
   const checkPangram = (word: string) => {
@@ -84,7 +109,11 @@ export default function GameScreen({route}: {route: any}) {
     <View style={styles.container}>
       {game && (
         <>
-          <Text style={styles.text}>Score: {totalScore}</Text>
+          <View style={styles.scoreContainer}>
+            <Text style={[styles.text, styles.centeredText]}>Score: {totalScore}</Text>
+            {isVisible && <Text style={[styles.text, styles.addedScore]}>+{points}</Text>}
+          </View>
+          
           <Text style={styles.error}>{errorMessage}</Text>
           <View>
           <Text style={styles.currentWord}>{currentWord}</Text>
@@ -125,6 +154,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     fontSize: 24,
   },
+  scoreContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
   error: {
     color: 'red',
     height: 40,
@@ -137,6 +170,15 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 24,
     textAlign: 'center',
+    borderWidth: 1,
+    borderColor: 'red',
+  },
+  centeredText: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  addedScore: {
+    marginLeft: 8,
   },
   button: {
     borderWidth: 1,
@@ -162,6 +204,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     flexDirection: 'row',
     width: '50%',
+    maxWidth: 500,
     marginHorizontal: 'auto',
     borderColor: 'black',
     borderRadius: 5,
