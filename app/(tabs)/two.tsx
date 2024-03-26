@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
     height: '85%',
     backgroundColor: 'white',
     marginVertical: 5,
+    width: 260
   },
   title: {
     fontSize: 20,

@@ -42,8 +42,14 @@ export default function TabOneScreen() {
       alert('Please enter a single critical letter that is unique from the other 6.');
       return;
     }
-    
-    // Add new game to the context
+    const sortedInputLetters = inputLetters.split('').sort().join('');
+    const isDuplicate = state.games.some((game) =>
+      game.letters.split('').sort().join('') === sortedInputLetters && game.criticalLetter === criticalLetter
+      );
+    if (isDuplicate) {
+      alert("A game with this combination of letters already exists.")
+      return;
+    }
     const newGame = {
       id: state.games.length + 1,
       score: 0,
