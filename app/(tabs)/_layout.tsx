@@ -12,17 +12,16 @@ export default function TabLayout() {
     <Tab.Navigator
     screenOptions={({ route }) => ({
       tabBarIcon: ({ color, size }) => {
-        let iconName;
+        let iconName = "archive";
 
         if (route.name === 'index') {
           iconName = 'plus-square';
-        } else if (route.name === 'two') {
-          iconName = 'archive';
         }
 
-        return <FontAwesome name='archive' size={size} color={color} />;
+        return <FontAwesome name={iconName as any} size={size} color={color} />;
       },
       tabBarActiveTintColor: Colors.light.tint,
+      headerTitleAlign: 'center',
     })}>
       <Tab.Screen name="index" component={TabOneScreen} options={{ title: 'New WordSmith' }} />
       <Tab.Screen name="two" component={TabTwoScreen} options={{ title: 'Archived Games' }} />

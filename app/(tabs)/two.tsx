@@ -14,17 +14,23 @@ export default function TabTwoScreen() {
   const navigation = useNavigation<StackNavigationProp<any>>();
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Archived Games</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <FlatList 
+        style={styles.listContainer}
         data={state.games}
+        showsVerticalScrollIndicator={false}
         keyExtractor={(item, index) => index.toString()} 
-        renderItem={({ item}) => (
-        <Pressable onPress={()=> {
-          navigation.navigate('GameScreen', {game: item});
-          console.log(JSON.stringify(item));
-          }}>
+        renderItem={({ item, index}) => (
+        <Pressable 
+          onPress={()=> {
+            navigation.navigate('GameScreen', {game: item});
+            console.log(JSON.stringify(item));
+          }}
+          style={styles.archivedGame}
+        >
           <ArchivedGame game={item} />
+          {index !== state.games.length-1 &&
+            <View style={styles.gameSeparator} lightColor="gray" darkColor="rgba(255,255,255,0.1)" />
+            }
         </Pressable>
         )}
       />
@@ -38,10 +44,26 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#649B92',
+  },
+  listContainer: {
+    borderWidth: 1,
+    borderColor: 'black',
+    borderRadius: 5,
+    height: '85%',
+    backgroundColor: 'white',
+    marginVertical: 5,
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
+  },
+  archivedGame: {
+    marginVertical: 4,
+    
+  },
+  gameSeparator: {
+    height: 1,
   },
   separator: {
     marginVertical: 30,

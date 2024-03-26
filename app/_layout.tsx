@@ -1,5 +1,4 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useFonts } from 'expo-font';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
@@ -9,10 +8,9 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useColorScheme } from '@/components/useColorScheme';
 import TabLayout from './(tabs)/_layout';
 import GameScreen from './GameScreen';
-import { GameProvider } from './GameContext';
 import { Provider } from 'react-redux';
 import store from './store';
-
+import { ArchivedHeader } from '@/components/ArchivedHeader'
 const Stack = createStackNavigator();
 
 export default function RootLayout() {
@@ -40,18 +38,13 @@ export default function RootLayout() {
   }
 
   return (
-    <GameProvider>
-      <Provider store={store}>
-
-      
-        <ThemeProvider value={useColorScheme() === 'dark' ? DarkTheme : DefaultTheme}>
-          <Stack.Navigator initialRouteName="(tabs)">
-            <Stack.Screen name="(tabs)" component={TabLayout} options={{ headerShown: false }} />
-            <Stack.Screen name="GameScreen" component={GameScreen} initialParams={{ selectedLetters: '' }} />
-          </Stack.Navigator>
-        </ThemeProvider>
-      </Provider>
-    </GameProvider>
-    
+    <Provider store={store}>
+      <ThemeProvider value={useColorScheme() === 'dark' ? DarkTheme : DefaultTheme}>
+        <Stack.Navigator initialRouteName="(tabs)">
+          <Stack.Screen name="(tabs)" component={TabLayout} options={{ headerShown: false, headerTitle: () => <ArchivedHeader /> }} />
+          <Stack.Screen name="GameScreen" component={GameScreen} initialParams={{ selectedLetters: '' }} />
+        </Stack.Navigator>
+      </ThemeProvider>
+    </Provider>
   );
 }

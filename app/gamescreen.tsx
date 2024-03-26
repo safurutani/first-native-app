@@ -153,6 +153,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: 24,
+    
   },
   scoreContainer: {
     display: 'flex',
@@ -182,12 +183,13 @@ const styles = StyleSheet.create({
   },
   button: {
     borderWidth: 1,
-    borderColor: 'black',
+    borderColor: '#649B92',
     borderRadius: 5,
     width: 100,
     textAlign: 'center',
     justifyContent: 'center',
     userSelect: 'none',
+    backgroundColor: '#C2FCF3'
   },
   buttonContainer: {
     display: 'flex',
@@ -206,11 +208,12 @@ const styles = StyleSheet.create({
     width: '50%',
     maxWidth: 500,
     marginHorizontal: 'auto',
-    borderColor: 'black',
+    borderColor: '#649B92',
     borderRadius: 5,
     padding: 8,
     borderWidth: 1,
     marginTop: 20,
     minHeight: 40,
+    backgroundColor: '#C2FCF3'
   }
 });

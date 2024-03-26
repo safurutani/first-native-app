@@ -7,8 +7,6 @@ import { useState } from 'react';
 import 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { GameProvider, useGameContext } from '../GameContext';
-import { GameContext } from '../GameContext';
 import { ADD_GAME } from '../reducers';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
@@ -64,30 +62,26 @@ export default function TabOneScreen() {
 
   return (
     <View style={styles.container}>
-      <GameProvider>
-        <View>
+        <View style={styles.title}>
           <Text style={styles.title}>Smithing Materials</Text>
-        </View>
-        <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-        
+        </View>        
         <View style={styles.searchContainer}>
           <View style={styles.searchWrapper}>
-            <Text>Enter 6 unique letters:</Text>
+            <Text style={styles.prompt}>Enter 6 unique letters:</Text>
             <TextInput style={styles.letterInput} value={inputLetters} maxLength={6} autoCapitalize='characters'
           onChangeText={handleInputChange}/>
-            <Text>Enter 1 unique critical letter:</Text>
+            <Text style={styles.prompt}>Enter 1 unique critical letter:</Text>
             <TextInput style={styles.criticalLetterInput} value={criticalLetter} maxLength={1} autoCapitalize='characters'
           onChangeText={handleCriticalInputChange}/>
           </View>
         </View>
         <View style={styles.buttonContainer}>
           <Pressable style={styles.smithButton} onPress={handleStartSmithing}>
-              <Text>Start Smithing</Text>
+              <Text style={styles.smithText}>Start Smithing</Text>
               <FontAwesome style={styles.smithButtonImage} name='gavel' size={20}/>
           </Pressable>
         </View>
-      </GameProvider>
-      
+ 
     </View>
   );
 }
@@ -95,20 +89,22 @@ export default function TabOneScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: '100%',
+    backgroundColor: '#649B92',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
     marginTop: 10,
+    backgroundColor: 'white',
+    width: 400,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-    justifyContent: 'center',
-    marginLeft: '10%',
+  prompt: {
+    fontSize: 18,
   },
   letterInput: {
     borderWidth: 1,
@@ -118,6 +114,7 @@ const styles = StyleSheet.create({
     width: 140,
     height: 30,
     textAlign: 'center',
+    fontSize: 18,
   },
   criticalLetterInput: {
     borderWidth: 1,
@@ -128,6 +125,8 @@ const styles = StyleSheet.create({
     height: 30,
     textAlign: 'center',
     justifyContent: 'center',
+    fontSize: 18,
+    backgroundColor: 'gold',
   },
   searchWrapper: {
     flex: 1,
@@ -135,32 +134,47 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: "100%",
     borderColor: 'blue',
-    width: 'auto',
+    width: 400,
+    backgroundColor: 'white',
   },
   searchContainer: {
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
     height: 220,
-    borderColor: 'red',
-    width:'auto',
+    maxWidth:400,
+    borderWidth: 1,
+    borderColor: 'white',
   },
   buttonContainer: {
     alignItems: 'center',
     marginTop: -10,
     marginBottom: 20,
+    paddingBottom: 14,
+    width: 400,
+    backgroundColor: 'white',
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: 'white',
+  },
+  smithText: {
+    color: 'white',
+    fontSize: 18,
   },
   smithButton: {
-    width: 140,
+    width: 160,
     height: "auto",
     borderColor: 'blue',
     justifyContent: 'center',
-    backgroundColor: 'lightskyblue',
+    backgroundColor: '#006B61',
     flexDirection: 'row',
     padding: 8,
     marginHorizontal:'auto',
+    borderRadius: 5,
+    
   },
   smithButtonImage: {
     marginLeft: 6,
+    color: 'white',
   }
 });

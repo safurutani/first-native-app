@@ -32,8 +32,6 @@ export const ArchivedGame: React.FC<ArchivedGameProps> = ({ game }) => {
 
 const styles = StyleSheet.create({
     container: {
-        borderWidth: 1,
-        borderColor: 'black',
         width: 240,
         padding: 6,
     },
@@ -57,6 +55,7 @@ const styles = StyleSheet.create({
     },
     critical: {
         backgroundColor: 'gold',
+        borderRadius: 5,
     },
     bold: {
         fontWeight: '600',
