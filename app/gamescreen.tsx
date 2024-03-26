@@ -157,6 +157,7 @@ const styles = StyleSheet.create({
   scoreContainer: {
     display: 'flex',
     flexDirection: 'row',
+    flex: 1, 
   },
   error: {
     color: 'red',
@@ -170,15 +171,14 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 24,
     textAlign: 'center',
-    borderWidth: 1,
-    borderColor: 'red',
   },
   centeredText: {
     flex: 1,
     justifyContent: 'center',
   },
   addedScore: {
-    marginLeft: 8,
+    position: 'absolute',
+    left: 120,
   },
   button: {
     borderWidth: 1,
