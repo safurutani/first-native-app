@@ -14,12 +14,11 @@ export default function GameScreen({route}: {route: any}) {
   const {selectedLetters, game} = route.params;
   const [errorMessage, setErrorMessage] = useState('');
   const [currentWord, setCurrentWord] = useState('');
-  const [totalScore, setTotalScore] = useState(0);
-  const [foundWords, setFoundWords] = useState<string[]>([]);
+  const [totalScore, setTotalScore] = useState(game.score);
+  const [foundWords, setFoundWords] = useState<string[]>(game.foundWords);
   const criticalLetter = selectedLetters[selectedLetters.length - 1];
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state);
-
   
   const handleLetterPress = (letter: any) => {
     setCurrentWord((prev) => prev + letter);
@@ -58,12 +57,6 @@ export default function GameScreen({route}: {route: any}) {
     const updatedTotalScore = totalScore + wordScore;
     setFoundWords(updatedFoundWords);
     setTotalScore(updatedTotalScore);
-
-    const updatedGame = {
-      ...game,
-      score: updatedTotalScore,
-      foundWords: updatedFoundWords
-    };   
   
     dispatch({ type: UPDATE_SCORE, payload: { id: game.id, score: updatedTotalScore } });
     dispatch({ type: UPDATE_FOUND_WORDS, payload: { id: game.id, foundWords: updatedFoundWords } });
