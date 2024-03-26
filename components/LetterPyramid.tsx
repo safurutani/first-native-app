@@ -35,17 +35,20 @@ export function LetterPyramid({ letters, handleLetterPress}: LetterPyramidProps)
 
 const styles = StyleSheet.create({
     container: {
+        
     },
     row: {
         flexDirection: 'row',
         marginVertical: 10,
         justifyContent: 'center',
         marginHorizontal: 36,
+        backgroundColor:'transparent',
     },
     middleRow: {
         flexDirection: 'row',
         justifyContent: 'center',
-        marginVertical: 10
+        marginVertical: 10,
+        backgroundColor:'transparent',
     },
 
 });

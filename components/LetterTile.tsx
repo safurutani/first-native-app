@@ -19,7 +19,7 @@ export function LetterTile({ letter, critical, onPress }: LetterTileProps) {
         critical ? styles.criticalText : styles.normalText,
       ];
     return (
-        <View>
+        <View style={styles.viewContainer}>
             <Pressable 
             onPress={() => onPress(letter)}
             onPressIn={() => setIsPressed(true)}
@@ -45,6 +45,9 @@ export function LetterTile({ letter, critical, onPress }: LetterTileProps) {
 }
 
 const styles = StyleSheet.create({
+    viewContainer: {
+        backgroundColor: 'transparent',
+    },
     container: {
         width: 80,
         height: 0,
@@ -58,7 +61,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         margin: 5,
         userSelect: 'none',
-        
     },
     androidTextContainer: {
         position: 'absolute',

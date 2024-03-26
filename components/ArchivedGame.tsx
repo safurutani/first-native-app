@@ -18,12 +18,12 @@ export const ArchivedGame: React.FC<ArchivedGameProps> = ({ game }) => {
     return (
         <View style={styles.container}>
             <Text style={styles.date}>{dateCreated}</Text>
-            <View style={styles.row}>
-                <Text style={styles.text}>{letters}</Text>
-                <Text style={styles.critical}>{criticalLetter}</Text>
+            <View style={styles.letterRow}>
+                <Text style={[styles.text, styles.bold]}>{letters}</Text>
+                <Text style={[styles.critical, styles.text, styles.bold]}>{criticalLetter}</Text>
             </View>
             <View style={styles.row}>
-                <Text style={styles.text}>Words Found: {foundWords.length}</Text>
+                <Text style={styles.text}>Words: {foundWords.length}</Text>
                 <Text style={styles.text}>Score: {score}</Text>
             </View>    
         </View>
@@ -41,16 +41,24 @@ const styles = StyleSheet.create({
         textAlign: 'right',
         fontSize: 12,
     },
+    letterRow: {
+        display: 'flex',
+        flexDirection: 'row',
+        padding: 4,
+        justifyContent: 'center',
+    },
     row: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-around'
     },
     text: {
-        fontSize: 16,
+        fontSize: 18,
     },
     critical: {
-        backgroundColor: 'yellow',
-        fontSize: 16,
+        backgroundColor: 'gold',
     },
+    bold: {
+        fontWeight: '600',
+    }
   });
