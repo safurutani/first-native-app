@@ -15,9 +15,9 @@ const Stack = createStackNavigator();
 export default function RootLayout() {
   const [loaded, error] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    OxygenMono: require('../assets/fonts/OxygenMono-Regular.ttf'),
     ...FontAwesome.font,
   });
-
   React.useEffect(() => {
     const loadFonts = async () => {
       await SplashScreen.hideAsync();
