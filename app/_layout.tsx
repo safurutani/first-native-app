@@ -10,6 +10,8 @@ import TabLayout from './(tabs)/_layout';
 import GameScreen from './GameScreen';
 import { Provider } from 'react-redux';
 import store from './store';
+
+
 const Stack = createStackNavigator();
 
 export default function RootLayout() {

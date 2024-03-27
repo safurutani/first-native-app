@@ -17,30 +17,21 @@ interface ArchivedGameProps {
         foundWords: string[];
         dateCreated: string;
       };
+    onPress: any
 }
 
-export const ArchivedGame: React.FC<ArchivedGameProps> = ({ game }) => {
+export const ArchivedGame: React.FC<ArchivedGameProps> = ({ game, onPress }) => {
     const { id, score, letters, criticalLetter, foundWords=[], dateCreated } = game;
     const [modalVisible, setModalVisibile] = useState(false);
     const state = useSelector((state: RootState) => state.game);
-    const dispatch = useDispatch();
+    
+    const handlePress = (gameId: number) => {
+        onPress(gameId);
+    }
     return (
-        <View style={styles.container}>
-            {modalVisible && <View
-                style={styles.modal}
-            >
-                <Text style={{textAlign: 'center'}}>Are you sure you want to delete this game?</Text>
-                <View style={styles.row}>
-                    <Pressable style={styles.button} onPress={()=>{
-                        dispatch({type: REMOVE_GAME, payload: id });
-                    }}>Yes</Pressable>
-                    <Pressable style={styles.button} onPress={() => {setModalVisibile(!modalVisible)}}>No</Pressable>
-                </View>
-            </View>}
+        <View style={[styles.container, { pointerEvents: modalVisible ? 'none' : 'auto' }]}>
             <View style={styles.topLine}>
-                <Pressable onPress={()=> {
-                    setModalVisibile(!modalVisible);                   
-                }}>
+                <Pressable onPress={()=>handlePress(game.id)}>
                     <FontAwesome name="trash" size={20} style={{marginLeft: 18}} />
                 </Pressable>
                 <Text style={styles.date}>{dateCreated}</Text>
@@ -65,14 +56,6 @@ const styles = StyleSheet.create({
     date: {
         textAlign: 'right',
         fontSize: 12,
-    },
-    button: {
-        borderWidth: 1,
-        borderColor: 'darkred',
-        borderRadius: 5,
-        paddingHorizontal: 12,
-        paddingVertical: 6,
-        marginTop: 8,
     },
     topLine: {
         display: 'flex',
@@ -100,17 +83,5 @@ const styles = StyleSheet.create({
     bold: {
         fontWeight: '600',
     },
-    modal: {
-        display: 'flex',
-        height: 120,
-        width: 240,
-        position: 'absolute',
-        marginVertical: 'auto',
-        backgroundColor: 'white',
-        zIndex: 2,
-        borderColor: 'darkred',
-        borderWidth: 2,
-        borderRadius: 5,
-        padding: 6
-    }
+    
   });

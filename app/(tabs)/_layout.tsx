@@ -23,7 +23,7 @@ export default function TabLayout() {
       },
       tabBarActiveTintColor: Colors.light.tint,
       headerTitleAlign: 'center',
-      
+      headerTitleStyle:{fontFamily: 'OxygenMono'}
     })}>
       <Tab.Screen name="index" component={TabOneScreen} options={{ title: 'New WordSmith'}} />
       <Tab.Screen name="two" component={TabTwoScreen} options={{ title: 'Archived Games' , headerTitle: () => <ArchivedHeader /> }} />
