@@ -82,8 +82,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'orange',
     },
       androidText: {
-        // Android-specific text styles
-        fontSize: 24, // Adjust as needed
+
+        fontSize: 24,
         color: 'black',
         backgroundColor: 'gold',
         marginTop: 0,

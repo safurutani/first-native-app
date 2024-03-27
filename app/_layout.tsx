@@ -41,7 +41,8 @@ export default function RootLayout() {
       <ThemeProvider value={useColorScheme() === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack.Navigator initialRouteName="(tabs)">
           <Stack.Screen name="(tabs)" component={TabLayout} options={{ headerShown: false}} />
-          <Stack.Screen name="GameScreen" component={GameScreen} initialParams={{ selectedLetters: '' }} />
+          <Stack.Screen name="GameScreen" component={GameScreen} options={{ headerTitle: 'Wordsmith', headerTitleAlign: 'center',
+    }} initialParams={{ selectedLetters: '' }} />
         </Stack.Navigator>
       </ThemeProvider>
     </Provider>

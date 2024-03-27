@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Platform, FlatList } from 'react-native';
 import { useState, useEffect } from 'react';
 import { LetterPyramid } from '@/components/LetterPyramid';
 import { useDispatch, useSelector } from 'react-redux';
@@ -32,6 +32,15 @@ export default function GameScreen({route}: {route: any}) {
       return () => clearTimeout(timeout); // Cleanup function to clear the timeout
     }
   }, [points]);
+
+  const buttonContainer = [
+    Platform.OS === 'android' && styles.androidButtonContainer,
+    Platform.OS === 'web' && styles.buttonContainer
+  ]
+  const addedScoreContainer = [
+    Platform.OS === 'android' && styles.androidAddedScore,
+    Platform.OS === 'web' && styles.addedScore,
+  ]
 
   const handleLetterPress = (letter: any) => {
     setCurrentWord((prev) => prev + letter);
@@ -95,7 +104,7 @@ export default function GameScreen({route}: {route: any}) {
     }
     const newTimeoutId = setTimeout(() => {
       setPoints(0); // Reset points after timeout
-    }, 3000); // Timeout duration in milliseconds
+    }, 3000); // Timeout duration
     setTimeoutId(newTimeoutId);
     console.log(`score: ${score}`)
     setPoints(score);
@@ -111,7 +120,7 @@ export default function GameScreen({route}: {route: any}) {
         <>
           <View style={styles.scoreContainer}>
             <Text style={[styles.text, styles.centeredText]}>Score: {totalScore}</Text>
-            {isVisible && <Text style={[styles.text, styles.addedScore]}>+{points}</Text>}
+            {isVisible && <Text style={[styles.text, addedScoreContainer]}>+{points}</Text>}
           </View>
           
           <Text style={styles.error}>{errorMessage}</Text>
@@ -120,27 +129,35 @@ export default function GameScreen({route}: {route: any}) {
           </View>
           
           <LetterPyramid letters={game.letters + game.criticalLetter} letter={''} handleLetterPress={handleLetterPress}/>
-          <View style={styles.buttonContainer}>
-            <Pressable style={styles.button} onPress={clearCurrentWord}>
-              <Text style={styles.text}>Clear</Text>
-            </Pressable>
-            <Pressable style={styles.button} onPress={deleteLetter}>
-              <Text style={styles.text}>Delete</Text>
-            </Pressable>
+          <View style={buttonContainer}>
+            <View style={styles.editButtonContainer}>
+              <Pressable style={styles.button} onPress={clearCurrentWord}>
+                <Text style={styles.text}>Clear</Text>
+              </Pressable>
+              <Pressable style={styles.button} onPress={deleteLetter}>
+                <Text style={styles.text}>Delete</Text>
+              </Pressable>
+            </View>
+            <View style={styles.submitContainer}>
+              <Pressable style={styles.button} onPress={submitWord}>
+                <Text style={styles.text}>Submit</Text>
+              </Pressable>
+            </View>
           </View>
-          <View>
-            <Pressable style={styles.button} onPress={submitWord}>
-              <Text style={styles.text}>Submit</Text>
-            </Pressable>
-          </View>
-          <View style={styles.foundWordContainer}>
-            {foundWords.map((word:string, index: number) => (
-              <Text style={styles.foundWords} key={index}>
-                {word}{'  \u2022 '}
-              </Text>
-            ))}
-            
-          </View>
+          <FlatList 
+            data={foundWords} 
+            style={styles.foundWordContainer} 
+            contentContainerStyle={styles.flexRow}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({item, index}) => (
+              <View>
+                <Text style={styles.foundWords} key={index}>
+                  {item}{'  \u2022 '}
+                </Text>
+              </View>
+              
+            )}>            
+          </FlatList>
         </>
       )}   
     </View>
@@ -158,12 +175,12 @@ const styles = StyleSheet.create({
   scoreContainer: {
     display: 'flex',
     flexDirection: 'row',
-    flex: 1, 
   },
   error: {
-    color: 'red',
+    color: 'darkred',
     height: 40,
     fontSize: 24,
+    fontWeight: '500',
   },
   currentWord: {
     height: 60,
@@ -181,6 +198,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 120,
   },
+  androidAddedScore: {
+    position: 'absolute',
+    left: 280,
+  },
   button: {
     borderWidth: 1,
     borderColor: '#649B92',
@@ -191,22 +212,37 @@ const styles = StyleSheet.create({
     userSelect: 'none',
     backgroundColor: 'white'
   },
-  buttonContainer: {
+  editButtonContainer: {
     display: 'flex',
     flexDirection: 'row',
     width: 400,
     justifyContent: 'space-around',
-    marginVertical: 60,
+    marginVertical: 16,
+  },
+  buttonContainer: {
+    width: 400,
+    margin: 0,
+  },
+  androidButtonContainer: {
+    width: 400,
+    margin: 0,
+  },
+  submitContainer: {
+    alignItems: 'center',
   },
   foundWords: {
     margin: 2,
+  },
+  flexRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap'
   },
   foundWordContainer: {
     display: 'flex',
     flexWrap: 'wrap',
     flexDirection: 'row',
-    width: '50%',
-    maxWidth: 500,
+    maxWidth: '95%',
+    width: 500,
     marginHorizontal: 'auto',
     borderColor: '#649B92',
     borderRadius: 5,
@@ -214,6 +250,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginTop: 20,
     minHeight: 40,
-    backgroundColor: 'white'
+    maxHeight: 180,
+    backgroundColor: 'white',
+    overflow:'hidden'
   }
 });
