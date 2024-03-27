@@ -250,7 +250,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginTop: 20,
     minHeight: 40,
-    maxHeight: 180,
+    height: 180,
+    maxHeight: '23%',
     backgroundColor: 'white',
     overflow:'hidden'
   }
