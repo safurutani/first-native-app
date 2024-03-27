@@ -43,7 +43,12 @@ export default function GameScreen({route}: {route: any}) {
   ]
 
   const handleLetterPress = (letter: any) => {
-    setCurrentWord((prev) => prev + letter);
+    if(currentWord.length < 20) {
+      setCurrentWord((prev) => prev + letter);
+    }
+    else {
+      setErrorMessage("This word is too long")
+    }
   };
   const deleteLetter = () => {
     setCurrentWord((prev) => prev.slice(0,prev.length-1) )
@@ -128,7 +133,7 @@ export default function GameScreen({route}: {route: any}) {
           <Text style={styles.currentWord}>{currentWord}</Text>
           </View>
           
-          <LetterPyramid letters={game.letters + game.criticalLetter} letter={''} handleLetterPress={handleLetterPress}/>
+          <LetterPyramid letters={game.letters +game.criticalLetter} letter={''} handleLetterPress={handleLetterPress}/>
           <View style={buttonContainer}>
             <View style={styles.editButtonContainer}>
               <Pressable style={styles.button} onPress={clearCurrentWord}>
@@ -250,8 +255,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginTop: 20,
     minHeight: 40,
-    height: 180,
-    maxHeight: '23%',
+    maxHeight: 180,
     backgroundColor: 'white',
     overflow:'hidden'
   }

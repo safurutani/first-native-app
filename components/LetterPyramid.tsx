@@ -5,12 +5,13 @@ import { LetterTile } from './LetterTile';
 
 interface LetterPyramidProps {
     letter: string;
-    letters: any;
+    letters: string;
     critical?: boolean;
     handleLetterPress: (letter: string) => any;
   }
 
-export function LetterPyramid({ letters, handleLetterPress}: LetterPyramidProps) {
+export function LetterPyramid({ letters='', handleLetterPress}: LetterPyramidProps) {
+    console.log(letters);
     const letterArray = letters.split('');
     return (
         <View style={styles.container}>
