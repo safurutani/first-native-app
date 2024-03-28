@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react';
 import { LetterPyramid } from '@/components/LetterPyramid';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from './store';
-import { UPDATE_FOUND_WORDS, UPDATE_SCORE } from './reducers'
+import { UPDATE_FOUND_WORDS, UPDATE_SCORE } from './reducers';
+
 
 interface GameScreenProps {
   route: any
@@ -22,7 +23,8 @@ export default function GameScreen({route}: {route: any}) {
   const criticalLetter = selectedLetters[selectedLetters.length - 1];
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state);
-  
+  const url = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
+
   useEffect(() => {
     if (points !== 0) {
       setIsVisible(true);
@@ -78,20 +80,36 @@ export default function GameScreen({route}: {route: any}) {
       setErrorMessage("You did not smith with the critical letter");
       return;
     }
-  
-    const wordScore = scoreWord(currentWord, checkPangram(currentWord));
-    const updatedFoundWords = [...foundWords, currentWord];
-    const updatedTotalScore = totalScore + wordScore;
-    setTimeout(() => {
-      setIsVisible(false);
-    }, 5000);
-    setFoundWords(updatedFoundWords);
-    setTotalScore(updatedTotalScore);
-  
-    dispatch({ type: UPDATE_SCORE, payload: { id: game.id, score: updatedTotalScore } });
-    dispatch({ type: UPDATE_FOUND_WORDS, payload: { id: game.id, foundWords: updatedFoundWords } });
-    setErrorMessage("");
-    setCurrentWord("");
+    const apiUrl = url + currentWord;  
+    fetch(apiUrl)
+      .then(response => response.json())
+      .then(data => {
+        if (data.title == "No Definitions Found") {
+          setErrorMessage("This word does not exist in our library");
+          setCurrentWord("");
+        }
+        else {
+          const wordScore = scoreWord(currentWord, checkPangram(currentWord));
+          const updatedFoundWords = [...foundWords, currentWord];
+          const updatedTotalScore = totalScore + wordScore;
+          setTimeout(() => {
+            setIsVisible(false);
+          }, 5000);
+          setFoundWords(updatedFoundWords);
+          setTotalScore(updatedTotalScore);
+        
+          dispatch({ type: UPDATE_SCORE, payload: { id: game.id, score: updatedTotalScore } });
+          dispatch({ type: UPDATE_FOUND_WORDS, payload: { id: game.id, foundWords: updatedFoundWords } });
+          setErrorMessage("");
+          setCurrentWord("");
+        }
+      })
+      .catch(error=> {
+        console.log(error);
+        setCurrentWord("");
+        return;
+      })
+    
   };
   const scoreWord = (word: string, pangram: boolean) => { 
     var score = word.length;
