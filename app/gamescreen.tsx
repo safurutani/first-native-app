@@ -47,6 +47,7 @@ export default function GameScreen({route}: {route: any}) {
   const handleLetterPress = (letter: any) => {
     if(currentWord.length < 20) {
       setCurrentWord((prev) => prev + letter);
+      setErrorMessage("");
     }
     else {
       setErrorMessage("This word is too long")
@@ -263,7 +264,7 @@ const styles = StyleSheet.create({
   foundWordContainer: {
     display: 'flex',
     flexWrap: 'wrap',
-    flexDirection: 'row',
+    flexDirection: 'column',
     maxWidth: '95%',
     width: 500,
     marginHorizontal: 'auto',
@@ -275,6 +276,5 @@ const styles = StyleSheet.create({
     minHeight: 40,
     maxHeight: 180,
     backgroundColor: 'white',
-    overflow:'hidden'
   }
 });

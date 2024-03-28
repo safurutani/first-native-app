@@ -11,7 +11,9 @@ interface LetterPyramidProps {
   }
 
 export function LetterPyramid({ letters='', handleLetterPress}: LetterPyramidProps) {
-    console.log(letters);
+    if (typeof letters !== 'string') {
+            return null;
+    }
     const letterArray = letters.split('');
     return (
         <View style={styles.container}>
@@ -53,10 +55,3 @@ const styles = StyleSheet.create({
     },
 
 });
-/*
-
- O   O
-   O
-O O O O
-
-*/
