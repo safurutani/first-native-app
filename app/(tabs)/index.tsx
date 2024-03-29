@@ -7,9 +7,10 @@ import { useState } from 'react';
 import 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { ADD_GAME } from '../reducers';
+import { ADD_GAME, LOAD_GAME_STATE } from '../reducers';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
+import { loadState } from '../storage';
 
 
 
@@ -42,18 +43,21 @@ export default function TabOneScreen() {
       alert('Please enter a single critical letter that is unique from the other 6.');
       return;
     }
+    if (state.games == undefined) {
+      dispatch({type: LOAD_GAME_STATE, payload: {games: []}})
+    }
     if (state.games.length > 0) {
       const isDuplicate = state.games.some((game) => {
         const gameLetters = game.letters || ''; 
         const sortedGameLetters = gameLetters.split('').sort().join('');
         const sortedInputLetters = inputLetters.split('').sort().join('');
-        if (isDuplicate) {
+        
+        return sortedGameLetters === sortedInputLetters && game.criticalLetter === criticalLetter;
+      });
+      if (isDuplicate) {
           alert("A game with this combination of letters already exists.")
           return;
         }
-        return sortedGameLetters === sortedInputLetters && game.criticalLetter === criticalLetter;
-      });
-    
     }
     
     const newGame = {

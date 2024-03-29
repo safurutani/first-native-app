@@ -10,11 +10,13 @@ import TabLayout from './(tabs)/_layout';
 import GameScreen from './GameScreen';
 import { Provider } from 'react-redux';
 import store from './store';
+import { loadState } from './storage';
 
 
 const Stack = createStackNavigator();
 
 export default function RootLayout() {
+
   const [loaded, error] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
     OxygenMono: require('../assets/fonts/OxygenMono-Regular.ttf'),
@@ -28,10 +30,17 @@ export default function RootLayout() {
     if (loaded) {
       loadFonts();
     }
-    
+    const loadGameState = async () => {
+      const gameState = await loadState();
+      if (gameState) {
+        store.dispatch({ type: 'LOAD_GAME_STATE', payload: gameState });
+      }
+    };
+    loadGameState();
     return () => {
       // Cleanup if needed
     };
+
   }, [loaded]);
 
   if (!loaded) {

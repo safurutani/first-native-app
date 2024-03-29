@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from './store';
 import { UPDATE_FOUND_WORDS, UPDATE_SCORE } from './reducers';
 
-
 interface GameScreenProps {
   route: any
 }

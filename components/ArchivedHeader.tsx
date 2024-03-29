@@ -4,11 +4,20 @@ import { RootState } from '@/app/store';
 
 export const ArchivedHeader = () => {
     const state = useSelector((state: RootState) => state.game);
-  
+    var singular = "Games";
+    /*if (state.games != undefined) {
+      if (state.games.length == 1) {
+        singular = "Game";
+      }
+      else {
+        singular = "Games";
+      }
+    }
+    */
     return (
       <View style={styles.headerContainer}>
         <Text style={styles.headerTitle}>Archived Games</Text>
-        <Text style={styles.numGames}>{state.games.length} Games</Text>
+        <Text style={styles.numGames}>{state.games.length} {singular}</Text>
       </View>
     );
   };

@@ -17,6 +17,7 @@ export const ADD_GAME = 'ADD_GAME';
 export const REMOVE_GAME = 'REMOVE_GAME';
 export const UPDATE_SCORE = 'UPDATE_SCORE';
 export const UPDATE_FOUND_WORDS = 'UPDATE_FOUND_WORDS';
+export const LOAD_GAME_STATE = 'LOAD_GAME_STATE';
 
 export interface AddGameAction {
   type: typeof ADD_GAME;
@@ -38,11 +39,17 @@ export interface UpdateFoundWordsAction {
   payload: { id: number; foundWords: string[] };
 }
 
+export interface LoadGameStateAction {
+  type: typeof LOAD_GAME_STATE;
+  payload: GameState;
+}
+
 export type GameAction =
   | AddGameAction
   | RemoveGameAction
   | UpdateScoreAction
-  | UpdateFoundWordsAction;
+  | UpdateFoundWordsAction
+  | LoadGameStateAction;
 
 const initialState: GameState = {
   games: [],
@@ -77,6 +84,12 @@ const gameReducer = (state: GameState = initialState, action: GameAction): GameS
             game.id === foundWordsId ? { ...game, foundWords: foundWords } : game
           ),
         };
+      case LOAD_GAME_STATE:
+        console.log(state);
+        return {
+          ...state,
+          games: action.payload.games,
+        }
     default:
       console.log(state.games);
       return state;

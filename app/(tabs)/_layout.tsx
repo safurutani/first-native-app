@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { FontAwesome } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
 import TabOneScreen from '.';
 import TabTwoScreen from './two';
 import { ArchivedHeader } from '@/components/ArchivedHeader';
+import { loadState } from '../storage';
+import store from '../store';
 
 const Tab = createBottomTabNavigator();
 
+
 export default function TabLayout() {
+  
   return (
     <Tab.Navigator
     screenOptions={({ route }) => ({

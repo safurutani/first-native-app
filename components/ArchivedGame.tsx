@@ -1,11 +1,10 @@
-import { Modal, Pressable, StyleSheet } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import { View, Text } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import React from 'react';
 import { RootState } from '@/app/store';
-import { useDispatch, useSelector } from 'react-redux';
+import {  useSelector } from 'react-redux';
 import { useState } from 'react';
-import { REMOVE_GAME } from '@/app/reducers';
 
 
 interface ArchivedGameProps {
