@@ -24,7 +24,7 @@ export default function TabOneScreen() {
   const [criticalLetter, setCriticalLetter] = useState('');
   const [selectedLetters, setSelectedLetters] = useState('');
   const navigation = useNavigation<StackNavigationProp<any>>();
-  const state = useSelector((state: RootState) => state.game);
+  const state = useSelector((state: RootState) => state.game) ?? {games: []};
   const dispatch = useDispatch();
   
   const handleInputChange = (text: string) => {
@@ -42,11 +42,11 @@ export default function TabOneScreen() {
     if (criticalLetter.length !== 1 || inputLetters.includes(criticalLetter)) {
       alert('Please enter a single critical letter that is unique from the other 6.');
       return;
-    }
+    }/*
     if (state.games == undefined) {
-      dispatch({type: LOAD_GAME_STATE, payload: {games: []}})
-    }
-    if (state.games.length > 0) {
+      dispatch({type: LOAD_GAME_STATE, payload: []})
+    }*/
+    if (state.games?.length > 0) {
       const isDuplicate = state.games.some((game) => {
         const gameLetters = game.letters || ''; 
         const sortedGameLetters = gameLetters.split('').sort().join('');

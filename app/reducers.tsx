@@ -12,6 +12,9 @@ export interface Game {
 export interface GameState {
   games: Game[];
 }
+export const initialState: GameState = {
+  games: [],
+};
 
 export const ADD_GAME = 'ADD_GAME';
 export const REMOVE_GAME = 'REMOVE_GAME';
@@ -50,10 +53,6 @@ export type GameAction =
   | UpdateScoreAction
   | UpdateFoundWordsAction
   | LoadGameStateAction;
-
-const initialState: GameState = {
-  games: [],
-};
 
 const gameReducer = (state: GameState = initialState, action: GameAction): GameState => {
   switch (action.type) {

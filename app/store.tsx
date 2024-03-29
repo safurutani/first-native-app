@@ -6,6 +6,8 @@ const persistedState = loadState();
 const store = configureStore({
   reducer: rootReducer,
 });
+store.dispatch({ type: 'LOAD_GAME_STATE', payload: persistedState });
+
 store.subscribe(() => {
   saveState(store.getState());
 });

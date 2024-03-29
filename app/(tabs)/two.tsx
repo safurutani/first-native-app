@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, FlatList, Pressable, ListRenderItem } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import { ArchivedGame } from '@/components/ArchivedGame';
@@ -7,14 +7,21 @@ import { useNavigation } from '@react-navigation/native';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { RootState } from '../store';
-import { REMOVE_GAME } from '../reducers';
+import { LOAD_GAME_STATE, REMOVE_GAME } from '../reducers';
 
 export default function TabTwoScreen() {
-  const state = useSelector((state: RootState) => state.game);
+  const state = useSelector((state: RootState) => state.game) ?? {games:[]};
   const navigation = useNavigation<StackNavigationProp<any>>();
   const dispatch = useDispatch();
   const [popupVisible, setPopupVisible] = useState(false);
   const [gameId, setGameId] = useState<number>();
+
+  useEffect(()=> {
+    if (state.games == undefined) {
+      dispatch({type: LOAD_GAME_STATE, payload: {games:[]}});
+    }
+  })
+  
   const togglePopup = () => {
     setPopupVisible(!popupVisible);
   };

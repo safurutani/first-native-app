@@ -17,7 +17,7 @@ export const ArchivedHeader = () => {
     return (
       <View style={styles.headerContainer}>
         <Text style={styles.headerTitle}>Archived Games</Text>
-        <Text style={styles.numGames}>{state.games.length} {singular}</Text>
+        <Text style={styles.numGames}>{state.games?.length} {singular}</Text>
       </View>
     );
   };

@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { initialState } from './reducers';
 
 const STORAGE_KEY = '@MyApp:state';
 
@@ -16,7 +17,7 @@ export const loadState = async () => {
   try {
     const serializedState = await AsyncStorage.getItem(STORAGE_KEY);
     if (serializedState === null) {
-      return undefined;
+      return initialState;
     }
     console.log("loaded" + serializedState);
     return JSON.parse(serializedState);
