@@ -129,7 +129,6 @@ export default function GameScreen({route}: {route: any}) {
       setPoints(0); // Reset points after timeout
     }, 3000); // Timeout duration
     setTimeoutId(newTimeoutId);
-    console.log(`score: ${score}`)
     setPoints(score);
     return score;
   }

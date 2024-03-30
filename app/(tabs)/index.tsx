@@ -24,9 +24,9 @@ export default function TabOneScreen() {
   const [criticalLetter, setCriticalLetter] = useState('');
   const [selectedLetters, setSelectedLetters] = useState('');
   const navigation = useNavigation<StackNavigationProp<any>>();
-  const state = useSelector((state: RootState) => state.game) ?? {games: []};
+  const state = useSelector((state: RootState) => state.game);
   const dispatch = useDispatch();
-  
+
   const handleInputChange = (text: string) => {
     setInputLetters(text.toUpperCase());
   };
