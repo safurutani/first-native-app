@@ -1,5 +1,4 @@
 import { Reducer, combineReducers } from '@reduxjs/toolkit';
-import { RootState, store } from './store';
 
 export interface Game {
   id: number;
@@ -96,8 +95,8 @@ const gameReducer: Reducer<GameState, GameAction> = (state:GameState = initialSt
   }
 };
 
-const rootReducer: Reducer<RootState> = combineReducers({
+const rootReducer: Reducer<{ game: GameState; }, GameAction, Partial<{ game: never; }>> = combineReducers({
   game: gameReducer,
 });
-export type RootState = ReturnType<Reducer<{ game: GameState; }, GameAction, Partial<{ game: never; }>>>;
+export type RootState = ReturnType<Reducer< { game: GameState; }, GameAction, Partial<{ game: never; }>>>;
 export default rootReducer;

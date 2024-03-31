@@ -7,7 +7,7 @@ import { useState } from 'react';
 import 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { ADD_GAME, GameAction, LOAD_GAME_STATE } from '../reducers';
+import { ADD_GAME, Game, GameAction, LOAD_GAME_STATE } from '../reducers';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../reducers';
 import { loadState } from '../storage';
@@ -48,7 +48,7 @@ export default function TabOneScreen() {
       dispatch({type: LOAD_GAME_STATE, payload: []})
     }*/
     if (state.games?.length > 0) {
-      const isDuplicate = state.games.some((game: any) => {
+      const isDuplicate = state.games.some((game: Game) => {
         const gameLetters = game.letters || ''; 
         const sortedGameLetters = gameLetters.split('').sort().join('');
         const sortedInputLetters = inputLetters.split('').sort().join('');
