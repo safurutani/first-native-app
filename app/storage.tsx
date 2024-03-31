@@ -19,10 +19,18 @@ export const loadState = async () => {
     if (serializedState === null) {
       return initialState;
     }
-    console.log("loaded" + serializedState);
+    console.log("loaded " + serializedState);
     return JSON.parse(serializedState);
   } catch (error) {
     console.error('Error loading state:', error);
     return undefined;
+  }
+};
+const clearAsyncStorage = async () => {
+  try {
+    await AsyncStorage.clear();
+    console.log('AsyncStorage cleared successfully.');
+  } catch (error) {
+    console.error('Error clearing AsyncStorage:', error);
   }
 };

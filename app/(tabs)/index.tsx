@@ -10,7 +10,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { ADD_GAME, LOAD_GAME_STATE } from '../reducers';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
-import { loadState } from '../storage';
+import { loadState, saveState } from '../storage';
 
 
 
@@ -69,7 +69,7 @@ export default function TabOneScreen() {
       dateCreated: formattedDate
     };
     dispatch({type: ADD_GAME, payload: newGame});
-    console.log(state.games);
+    saveState(state.games);
     setInputLetters('');
     setCriticalLetter('');
     Keyboard.dismiss();

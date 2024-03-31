@@ -57,7 +57,6 @@ export type GameAction =
 const gameReducer = (state: GameState = initialState, action: GameAction): GameState => {
   switch (action.type) {
     case ADD_GAME:
-      console.log(state.games);
       return {
         ...state,
         games: [...state.games, action.payload],
@@ -84,13 +83,11 @@ const gameReducer = (state: GameState = initialState, action: GameAction): GameS
           ),
         };
       case LOAD_GAME_STATE:
-        console.log(state);
         return {
           ...state,
           games: action.payload.games,
         }
     default:
-      console.log(state.games);
       return state;
   }
 };

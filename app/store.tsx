@@ -1,15 +1,19 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { applyMiddleware, configureStore } from '@reduxjs/toolkit';
 import { rootReducer } from './reducers';
 import { loadState, saveState } from './storage';
 
-const persistedState = loadState();
 const store = configureStore({
   reducer: rootReducer,
 });
-store.dispatch({ type: 'LOAD_GAME_STATE', payload: persistedState });
+//store.dispatch({ type: 'LOAD_GAME_STATE', payload: loadState() });
+console.log('Initial state after loading:', store.getState());
 
 store.subscribe(() => {
-  saveState(store.getState());
+  console.log("state updated", store.getState())
+  if (store.getState() == undefined) {
+    saveState({game: {games: []}})
+  }
+  saveState(loadState());
 });
 export type RootState = ReturnType<typeof rootReducer>;
 export default store;
