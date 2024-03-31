@@ -7,10 +7,11 @@ import { useState } from 'react';
 import 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { ADD_GAME, LOAD_GAME_STATE } from '../reducers';
+import { ADD_GAME, GameAction, LOAD_GAME_STATE } from '../reducers';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../store';
+import { RootState } from '../reducers';
 import { loadState } from '../storage';
+import { Dispatch } from '@reduxjs/toolkit';
 
 
 
@@ -25,7 +26,7 @@ export default function TabOneScreen() {
   const [selectedLetters, setSelectedLetters] = useState('');
   const navigation = useNavigation<StackNavigationProp<any>>();
   const state = useSelector((state: RootState) => state.game) ?? {games: []};
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<GameAction>>();
   
   const handleInputChange = (text: string) => {
     setInputLetters(text.toUpperCase());
@@ -47,7 +48,7 @@ export default function TabOneScreen() {
       dispatch({type: LOAD_GAME_STATE, payload: []})
     }*/
     if (state.games?.length > 0) {
-      const isDuplicate = state.games.some((game) => {
+      const isDuplicate = state.games.some((game: any) => {
         const gameLetters = game.letters || ''; 
         const sortedGameLetters = gameLetters.split('').sort().join('');
         const sortedInputLetters = inputLetters.split('').sort().join('');

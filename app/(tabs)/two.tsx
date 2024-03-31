@@ -6,7 +6,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
-import { RootState } from '../store';
+import { RootState } from '../reducers';
 import { LOAD_GAME_STATE, REMOVE_GAME } from '../reducers';
 
 export default function TabTwoScreen() {

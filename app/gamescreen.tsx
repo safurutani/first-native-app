@@ -3,8 +3,9 @@ import { View, Text, StyleSheet, Pressable, Platform, FlatList } from 'react-nat
 import { useState, useEffect } from 'react';
 import { LetterPyramid } from '@/components/LetterPyramid';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from './store';
+import { GameAction, RootState } from './reducers';
 import { UPDATE_FOUND_WORDS, UPDATE_SCORE } from './reducers';
+import { Dispatch } from '@reduxjs/toolkit';
 
 interface GameScreenProps {
   route: any
@@ -20,7 +21,7 @@ export default function GameScreen({route}: {route: any}) {
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
   const [foundWords, setFoundWords] = useState<string[]>(game.foundWords);
   const criticalLetter = selectedLetters[selectedLetters.length - 1];
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<GameAction>>();
   const state = useSelector((state: RootState) => state);
   const url = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
 

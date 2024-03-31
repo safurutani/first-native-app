@@ -6,7 +6,6 @@ import TabOneScreen from '.';
 import TabTwoScreen from './two';
 import { ArchivedHeader } from '@/components/ArchivedHeader';
 import { loadState } from '../storage';
-import store from '../store';
 
 const Tab = createBottomTabNavigator();
 
