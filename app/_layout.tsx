@@ -24,13 +24,7 @@ export default function RootLayout() {
     ...FontAwesome.font,
   });
   React.useEffect(() => {
-    const loadFonts = async () => {
-      await SplashScreen.hideAsync();
-    };
 
-    if (loaded) {
-      loadFonts();
-    }
     const loadGameState = async () => {
       const gameState = await loadState();
       if (gameState) {

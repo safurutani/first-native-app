@@ -13,9 +13,8 @@ const persistConfig = {
 const persistedReducer = persistReducer<any, any>(persistConfig, rootReducer);
 export const store = configureStore({
   reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk)
 });
-//store.dispatch({ type: 'LOAD_GAME_STATE', payload: persistedState });
 
 store.subscribe(() => {
   saveState(store.getState());

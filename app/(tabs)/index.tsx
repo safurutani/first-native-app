@@ -43,10 +43,7 @@ export default function TabOneScreen() {
     if (criticalLetter.length !== 1 || inputLetters.includes(criticalLetter)) {
       alert('Please enter a single critical letter that is unique from the other 6.');
       return;
-    }/*
-    if (state.games == undefined) {
-      dispatch({type: LOAD_GAME_STATE, payload: []})
-    }*/
+    }
     if (state.games?.length > 0) {
       const isDuplicate = state.games.some((game: Game) => {
         const gameLetters = game.letters || ''; 

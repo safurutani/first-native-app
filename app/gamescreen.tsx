@@ -30,7 +30,7 @@ export default function GameScreen({route}: {route: any}) {
       setIsVisible(true);
       const timeout = setTimeout(() => {
         setIsVisible(false);
-      }, 2000); // 2000 milliseconds (2 seconds)
+      }, 2000); 
       return () => clearTimeout(timeout); // Cleanup function to clear the timeout
     }
   }, [points]);
@@ -128,7 +128,7 @@ export default function GameScreen({route}: {route: any}) {
     }
     const newTimeoutId = setTimeout(() => {
       setPoints(0); // Reset points after timeout
-    }, 3000); // Timeout duration
+    }, 3000); 
     setTimeoutId(newTimeoutId);
     console.log(`score: ${score}`)
     setPoints(score);
