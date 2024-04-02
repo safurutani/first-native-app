@@ -1,4 +1,4 @@
-import { combineReducers } from '@reduxjs/toolkit';
+import { Reducer, combineReducers } from '@reduxjs/toolkit';
 
 export interface Game {
   id: number;
@@ -54,7 +54,7 @@ export type GameAction =
   | UpdateFoundWordsAction
   | LoadGameStateAction;
 
-const gameReducer = (state: GameState = initialState, action: GameAction): GameState => {
+const gameReducer: Reducer<GameState, GameAction> = (state:GameState = initialState, action: GameAction): GameState => {
   switch (action.type) {
     case ADD_GAME:
       return {
@@ -67,11 +67,11 @@ const gameReducer = (state: GameState = initialState, action: GameAction): GameS
         games: state.games.filter((game) => game.id !== action.payload),
       };
       case UPDATE_SCORE:
-        const { id: scoreId, score } = action.payload;
+        const { id, score } = action.payload;
         return {
           ...state,
           games: state.games.map((game) =>
-            game.id === scoreId ? { ...game, score: score } : game
+            game.id === id ? { ...game, score: score } : game
           ),
         };
       case UPDATE_FOUND_WORDS:
@@ -92,7 +92,8 @@ const gameReducer = (state: GameState = initialState, action: GameAction): GameS
   }
 };
 
-export const rootReducer = combineReducers({
+const rootReducer: Reducer<{ game: GameState; }, GameAction, Partial<{ game: never; }>> = combineReducers({
   game: gameReducer,
 });
+export type RootState = ReturnType<Reducer< { game: GameState; }, GameAction, Partial<{ game: never; }>>>;
 export default rootReducer;

@@ -9,8 +9,9 @@ import { useColorScheme } from '@/components/useColorScheme';
 import TabLayout from './(tabs)/_layout';
 import GameScreen from './GameScreen';
 import { Provider } from 'react-redux';
-import store from './store';
+import { store, persistor } from './store';
 import { loadState } from './storage';
+import { PersistGate } from 'redux-persist/integration/react';
 
 
 const Stack = createStackNavigator();
@@ -49,6 +50,7 @@ export default function RootLayout() {
 
   return (
     <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
       <ThemeProvider value={useColorScheme() === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack.Navigator initialRouteName="(tabs)">
           <Stack.Screen name="(tabs)" component={TabLayout} options={{ headerShown: false}} />
@@ -56,6 +58,7 @@ export default function RootLayout() {
     }} initialParams={{ selectedLetters: '' }} />
         </Stack.Navigator>
       </ThemeProvider>
+      </PersistGate>
     </Provider>
   );
 }
