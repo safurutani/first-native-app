@@ -51,7 +51,7 @@ export default function RootLayout() {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-      <ThemeProvider value={useColorScheme() === 'dark' ? DarkTheme : DefaultTheme}>
+      <ThemeProvider value={DefaultTheme}>
         <Stack.Navigator initialRouteName="(tabs)">
           <Stack.Screen name="(tabs)" component={TabLayout} options={{ headerShown: false}} />
           <Stack.Screen name="GameScreen" component={GameScreen} options={{ headerTitle: 'Wordsmith', headerTitleAlign: 'center',
