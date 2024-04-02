@@ -2,6 +2,7 @@
   "name": "first-native-app",
   "main": "expo-router/entry",
   "version": "1.0.0",
+  "homepage": "https://safurutani.github.io/wordsmith",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
