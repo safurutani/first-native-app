@@ -9,6 +9,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "test": "jest --watchAll",
+    "build": "webpack --config webpack.conf.js",
     "predeploy" : "npm run build",
     "deploy" : "gh-pages -d build"
   },
