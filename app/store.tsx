@@ -21,3 +21,5 @@ store.subscribe(() => {
 });
 
 export const persistor = persistStore(store);
+
+export { RootState };
