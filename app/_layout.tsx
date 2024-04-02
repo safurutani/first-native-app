@@ -31,13 +31,6 @@ export default function RootLayout() {
     if (loaded) {
       loadFonts();
     }
-    const loadGameState = async () => {
-      const gameState = await loadState();
-      if (gameState) {
-        store.dispatch({ type: 'LOAD_GAME_STATE', payload: gameState });
-      }
-    };
-    loadGameState();
     return () => {
       // Cleanup if needed
     };
