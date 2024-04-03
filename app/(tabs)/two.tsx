@@ -38,14 +38,16 @@ export default function TabTwoScreen() {
         animationType='fade' 
         onRequestClose={() => setPopupVisible(false)}
       >
-        <View style={styles.modal}>
-          <Text style={{textAlign: 'center'}}>Are you sure you want to delete this game?</Text>
-          <View style={styles.row}>
-              <Pressable style={styles.button} onPress={()=>{
-                  dispatch({type: REMOVE_GAME, payload: gameId });
-                  togglePopup();
-              }}><Text>Yes</Text></Pressable>
-              <Pressable style={styles.button} onPress={() => {togglePopup()}}><Text>No</Text></Pressable>
+        <View style={styles.centered}>
+          <View style={styles.modal}>
+            <Text style={{textAlign: 'center'}}>Are you sure you want to delete this game?</Text>
+            <View style={styles.row}>
+                <Pressable style={styles.button} onPress={()=>{
+                    dispatch({type: REMOVE_GAME, payload: gameId });
+                    togglePopup();
+                }}><Text>Yes</Text></Pressable>
+                <Pressable style={styles.button} onPress={() => {togglePopup()}}><Text>No</Text></Pressable>
+            </View>
           </View>
         </View>
       </Modal>
@@ -81,6 +83,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#649B92',
   },
+  centered: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'transparent',
+    marginVertical:'auto',
+    height: '100%',
+  },
   listContainer: {
     borderWidth: 1,
     borderColor: '#006B61',
@@ -113,14 +123,12 @@ const styles = StyleSheet.create({
     display: 'flex',
     height: 120,
     width: '80%',
-    marginVertical: 'auto',
-    marginHorizontal: 'auto',
     backgroundColor: 'white',
     zIndex: 2,
     borderColor: 'darkred',
     borderWidth: 2,
     borderRadius: 5,
-    justifyContent: 'space-evenly'
+    justifyContent: 'space-evenly',
   },
   button: {
     borderWidth: 1,
