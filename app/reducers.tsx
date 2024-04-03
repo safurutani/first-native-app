@@ -1,7 +1,7 @@
 import { Reducer, combineReducers } from '@reduxjs/toolkit';
 
 export interface Game {
-  id: number;
+  id: string;
   score: number;
   letters: string;
   criticalLetter: string;
@@ -29,17 +29,17 @@ export interface AddGameAction {
 
 export interface RemoveGameAction {
   type: typeof REMOVE_GAME;
-  payload: number;
+  payload: string;
 }
 
 export interface UpdateScoreAction {
   type: typeof UPDATE_SCORE;
-  payload: { id: number; score: number };
+  payload: { id: string; score: number };
 }
 
 export interface UpdateFoundWordsAction {
   type: typeof UPDATE_FOUND_WORDS;
-  payload: { id: number; foundWords: string[] };
+  payload: { id: string; foundWords: string[] };
 }
 
 export interface LoadGameStateAction {
@@ -53,6 +53,7 @@ export type GameAction =
   | UpdateScoreAction
   | UpdateFoundWordsAction
   | LoadGameStateAction;
+
 
 const gameReducer: Reducer<GameState, GameAction> = (state:GameState = initialState, action: GameAction): GameState => {
   switch (action.type) {

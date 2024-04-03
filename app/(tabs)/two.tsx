@@ -14,7 +14,7 @@ export default function TabTwoScreen() {
   const navigation = useNavigation<StackNavigationProp<any>>();
   const dispatch = useDispatch();
   const [popupVisible, setPopupVisible] = useState(false);
-  const [gameId, setGameId] = useState<number>();
+  const [gameId, setGameId] = useState<string>();
 
   useEffect(()=> {
     if (state.games == undefined) {
@@ -25,7 +25,7 @@ export default function TabTwoScreen() {
   const togglePopup = () => {
     setPopupVisible(!popupVisible);
   };
-  const removeGame = (id: number) => {
+  const removeGame = (id: string) => {
     togglePopup();
     setGameId(id);
     console.log(gameId);

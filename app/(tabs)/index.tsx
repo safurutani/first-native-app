@@ -34,6 +34,11 @@ export default function TabOneScreen() {
   const handleCriticalInputChange = (text: string) => {
     setCriticalLetter(text.toUpperCase());
   };
+  const  generateUniqueId = () => {
+    const timeStamp = Date.now().toString(36);
+    const randomNum = Math.random().toString(36).substr(2);
+    return timeStamp + randomNum;
+  };
 
   const handleStartSmithing = async () => {
     if (inputLetters.length !== 6 || new Set(inputLetters).size !== 6) {
@@ -59,7 +64,7 @@ export default function TabOneScreen() {
     }
     
     const newGame = {
-      id: state.games.length + 1,
+      id: generateUniqueId(),
       score: 0,
       letters: inputLetters,
       criticalLetter: criticalLetter,

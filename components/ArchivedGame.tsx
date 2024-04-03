@@ -9,7 +9,7 @@ import { useState } from 'react';
 
 interface ArchivedGameProps {
     game: {
-        id: number;
+        id: string;
         score: number;
         letters: string;
         criticalLetter: string;
@@ -24,7 +24,7 @@ export const ArchivedGame: React.FC<ArchivedGameProps> = ({ game, onPress }) => 
     const [modalVisible, setModalVisibile] = useState(false);
     const state = useSelector((state: RootState) => state.game);
     
-    const handlePress = (gameId: number) => {
+    const handlePress = (gameId: string) => {
         onPress(gameId);
     }
     return (
