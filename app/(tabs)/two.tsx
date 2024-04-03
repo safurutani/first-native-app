@@ -38,8 +38,8 @@ export default function TabTwoScreen() {
             <Pressable style={styles.button} onPress={()=>{
                 dispatch({type: REMOVE_GAME, payload: gameId });
                 togglePopup();
-            }}>Yes</Pressable>
-            <Pressable style={styles.button} onPress={() => {togglePopup()}}>No</Pressable>
+            }}><Text>Yes</Text></Pressable>
+            <Pressable style={styles.button} onPress={() => {togglePopup()}}><Text>No</Text></Pressable>
         </View>
       </View>
       }
