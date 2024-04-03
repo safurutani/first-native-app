@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, FlatList, Pressable, ListRenderItem } from 'react-native';
+import { StyleSheet, FlatList, Pressable, Modal } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import { ArchivedGame } from '@/components/ArchivedGame';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -32,17 +32,23 @@ export default function TabTwoScreen() {
   }
   return (
     <View style={styles.container} >
-      {popupVisible && <View style={styles.modal}>
-        <Text style={{textAlign: 'center'}}>Are you sure you want to delete this game?</Text>
-        <View style={styles.row}>
-            <Pressable style={styles.button} onPress={()=>{
-                dispatch({type: REMOVE_GAME, payload: gameId });
-                togglePopup();
-            }}><Text>Yes</Text></Pressable>
-            <Pressable style={styles.button} onPress={() => {togglePopup()}}><Text>No</Text></Pressable>
+      <Modal
+        visible={popupVisible} 
+        transparent 
+        animationType='fade' 
+        onRequestClose={() => setPopupVisible(false)}
+      >
+        <View style={styles.modal}>
+          <Text style={{textAlign: 'center'}}>Are you sure you want to delete this game?</Text>
+          <View style={styles.row}>
+              <Pressable style={styles.button} onPress={()=>{
+                  dispatch({type: REMOVE_GAME, payload: gameId });
+                  togglePopup();
+              }}><Text>Yes</Text></Pressable>
+              <Pressable style={styles.button} onPress={() => {togglePopup()}}><Text>No</Text></Pressable>
+          </View>
         </View>
-      </View>
-      }
+      </Modal>
       <FlatList 
         style={styles.listContainer}
         data={state.games}
@@ -106,15 +112,15 @@ const styles = StyleSheet.create({
   modal: {
     display: 'flex',
     height: 120,
-    width: 240,
-    position: 'absolute',
+    width: '80%',
     marginVertical: 'auto',
+    marginHorizontal: 'auto',
     backgroundColor: 'white',
     zIndex: 2,
     borderColor: 'darkred',
     borderWidth: 2,
     borderRadius: 5,
-    padding: 6
+    justifyContent: 'space-evenly'
   },
   button: {
     borderWidth: 1,
