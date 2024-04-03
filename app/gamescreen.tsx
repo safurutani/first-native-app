@@ -38,12 +38,17 @@ export default function GameScreen({route}: {route: any}) {
   const buttonContainer = [
     Platform.OS === 'android' && styles.androidButtonContainer,
     Platform.OS === 'web' && styles.buttonContainer
-  ]
+  ];
   const addedScoreContainer = [
     Platform.OS === 'android' && styles.androidAddedScore,
     Platform.OS === 'web' && styles.addedScore,
+  ];
+  var longErrorMessage = false;
+  const errorMessageStyle = [
+    Platform.OS === 'android' && !longErrorMessage ? styles.androidError: styles.error,
+    Platform.OS === 'web' && styles.error
   ]
-
+  
   const handleLetterPress = (letter: any) => {
     if(currentWord.length < 20) {
       setCurrentWord((prev) => prev + letter);
@@ -66,18 +71,21 @@ export default function GameScreen({route}: {route: any}) {
     }
   
     if (foundWords.some((word) => word === currentWord)) {
+      longErrorMessage = false;
       setErrorMessage("You already smithed this word");
       setCurrentWord("");
       return;
     }
   
     if (currentWord.length < 4) {
+      longErrorMessage = false;
       setErrorMessage("This word is too short");
       setCurrentWord("");
       return;
     }
   
     if (!currentWord.includes(game.criticalLetter)) {
+      longErrorMessage = true;
       setErrorMessage("You did not smith with the critical letter");
       return;
     }
@@ -86,6 +94,7 @@ export default function GameScreen({route}: {route: any}) {
       .then(response => response.json())
       .then(data => {
         if (data.title == "No Definitions Found") {
+          longErrorMessage = false;
           setErrorMessage("This word does not exist in our library");
           setCurrentWord("");
         }
@@ -146,7 +155,7 @@ export default function GameScreen({route}: {route: any}) {
             {isVisible && <Text style={[styles.text, addedScoreContainer]}>+{points}</Text>}
           </View>
           
-          <Text style={styles.error}>{errorMessage}</Text>
+          <Text style={errorMessageStyle}>{errorMessage}</Text>
           <View>
           <Text style={styles.currentWord}>{currentWord}</Text>
           </View>
@@ -203,6 +212,12 @@ const styles = StyleSheet.create({
     color: 'darkred',
     height: 40,
     fontSize: 24,
+    fontWeight: '500',
+  },
+  androidError: {
+    color: 'darkred',
+    height: 40,
+    fontSize: 20,
     fontWeight: '500',
   },
   currentWord: {
