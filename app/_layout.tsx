@@ -12,6 +12,7 @@ import { Provider } from 'react-redux';
 import { store, persistor } from './store';
 import { loadState } from './storage';
 import { PersistGate } from 'redux-persist/integration/react';
+import ModalScreen from './modal';
 
 
 const Stack = createStackNavigator();
@@ -49,6 +50,7 @@ export default function RootLayout() {
           <Stack.Screen name="(tabs)" component={TabLayout} options={{ headerShown: false}} />
           <Stack.Screen name="GameScreen" component={GameScreen} options={{ headerTitle: 'Wordsmith', headerTitleAlign: 'center',
     }} initialParams={{ selectedLetters: '' }} />
+          <Stack.Screen name="modal" component={ModalScreen} options={{headerTitle: ""}} />
         </Stack.Navigator>
       </ThemeProvider>
       </PersistGate>

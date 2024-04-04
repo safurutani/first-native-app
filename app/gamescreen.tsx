@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 import { View, Text, StyleSheet, Pressable, Platform, FlatList } from 'react-native';
 import { useState, useEffect } from 'react';
 import { LetterPyramid } from '@/components/LetterPyramid';
@@ -6,6 +6,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { GameAction, RootState } from './reducers';
 import { UPDATE_FOUND_WORDS, UPDATE_SCORE } from './reducers';
 import { Dispatch } from '@reduxjs/toolkit';
+import CustomHeader from '@/components/InfoHeader';
+import { useNavigation } from 'expo-router';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 interface GameScreenProps {
   route: any
@@ -24,6 +27,7 @@ export default function GameScreen({route}: {route: any}) {
   const dispatch = useDispatch<Dispatch<GameAction>>();
   const state = useSelector((state: RootState) => state);
   const url = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
+  const navigation = useNavigation<StackNavigationProp<any>>();
 
   useEffect(() => {
     if (points !== 0) {
@@ -34,6 +38,14 @@ export default function GameScreen({route}: {route: any}) {
       return () => clearTimeout(timeout); // Cleanup function to clear the timeout
     }
   }, [points]);
+
+  useLayoutEffect(()=> {
+    navigation.setOptions({
+      headerRight: () => (
+        <CustomHeader onPress={()=> navigation.navigate('modal')} />
+      ),
+    });
+  }, [navigation]);
 
   const buttonContainer = [
     Platform.OS === 'android' && styles.androidButtonContainer,

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { StyleSheet, FlatList, Pressable, Modal } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import { ArchivedGame } from '@/components/ArchivedGame';
@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { RootState } from '../reducers';
 import { LOAD_GAME_STATE, REMOVE_GAME } from '../reducers';
+import CustomHeader from '@/components/InfoHeader';
 
 export default function TabTwoScreen() {
   const state = useSelector((state: RootState) => state.game) ?? {games:[]};
@@ -21,7 +22,13 @@ export default function TabTwoScreen() {
       dispatch({type: LOAD_GAME_STATE, payload: {games:[]}});
     }
   })
-  
+  useLayoutEffect(()=> {
+    navigation.setOptions({
+      headerRight: () => (
+        <CustomHeader onPress={()=> navigation.navigate('modal')} />
+      ),
+    });
+  }, [navigation]);
   const togglePopup = () => {
     setPopupVisible(!popupVisible);
   };

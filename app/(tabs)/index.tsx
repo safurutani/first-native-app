@@ -1,18 +1,16 @@
-import { Image, Keyboard, StyleSheet, TextInput, Pressable } from 'react-native';
-import { LetterPyramid } from '@/components/LetterPyramid';
-import EditScreenInfo from '@/components/EditScreenInfo';
+import { Keyboard, StyleSheet, TextInput, Pressable } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import { FontAwesome } from '@expo/vector-icons';
-import { useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { ADD_GAME, Game, GameAction, LOAD_GAME_STATE } from '../reducers';
+import { ADD_GAME, Game, GameAction } from '../reducers';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../reducers';
-import { loadState, saveState } from '../storage';
+import { saveState } from '../storage';
 import { Dispatch } from '@reduxjs/toolkit';
-
+import CustomHeader from '@/components/InfoHeader';
 
 
 export default function TabOneScreen() {
@@ -28,6 +26,14 @@ export default function TabOneScreen() {
   const state = useSelector((state: RootState) => state.game) ?? {games: []};
   const dispatch = useDispatch<Dispatch<GameAction>>();
   
+  useLayoutEffect(()=> {
+    navigation.setOptions({
+      headerRight: () => (
+        <CustomHeader onPress={()=> navigation.navigate('modal')} />
+      ),
+    });
+  }, [navigation]);
+
   const handleInputChange = (text: string) => {
     setInputLetters(text.toUpperCase());
   };

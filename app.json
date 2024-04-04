@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "first-native-app",
-    "slug": "first-native-app",
+    "name": "WordSmith",
+    "slug": "WordSmith",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/wordsmith app icon.jpg",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {

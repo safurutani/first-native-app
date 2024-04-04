@@ -33,6 +33,7 @@ export const ArchivedHeader = () => {
       fontSize: 18,
       fontWeight: 'bold',
       color: '#333',
+      fontFamily: 'OxygenMono'
     },
     numGames: {
         fontSize: 14,
