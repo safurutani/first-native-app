@@ -88,21 +88,21 @@ export default function TabOneScreen() {
   return (
     <View style={styles.container}>
         <View style={styles.title}>
-          <Text style={styles.title}>Smithing Materials</Text>
+          <Text accessibilityLabel='Smithing Materials' style={styles.title}>Smithing Materials</Text>
         </View>        
         <View style={styles.searchContainer}>
           <View style={styles.searchWrapper}>
-            <Text style={styles.prompt}>Enter 6 unique letters:</Text>
+            <Text accessibilityLabel='Enter 6 unique letters' style={styles.prompt}>Enter 6 unique letters:</Text>
             <TextInput style={styles.letterInput} value={inputLetters} maxLength={6} autoCapitalize='characters'
           onChangeText={handleInputChange}/>
-            <Text style={styles.prompt}>Enter 1 unique critical letter:</Text>
+            <Text accessibilityLabel='Enter 1 unique critical letter' style={styles.prompt}>Enter 1 unique critical letter:</Text>
             <TextInput style={styles.criticalLetterInput} value={criticalLetter} maxLength={1} autoCapitalize='characters'
           onChangeText={handleCriticalInputChange}/>
           </View>
         </View>
         <View style={styles.buttonContainer}>
           <Pressable style={styles.smithButton} onPress={handleStartSmithing}>
-              <Text style={styles.smithText}>Start Smithing</Text>
+              <Text accessibilityLabel='Start Smithing' style={styles.smithText}>Start Smithing</Text>
               <FontAwesome style={styles.smithButtonImage} name='gavel' size={20}/>
           </Pressable>
         </View>
