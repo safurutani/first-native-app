@@ -9,7 +9,7 @@ export const ArchivedHeader = () => {
     return (
       <View style={styles.headerContainer}>
         <Text style={styles.headerTitle}>Archived Games</Text>
-        <Text style={styles.numGames}>{state.games?.length} {singular}</Text>
+        <Text style={{fontFamily: 'OxygenMono', ...styles.numGames}}>{state.games?.length} {singular}</Text>
       </View>
     );
   };
@@ -23,7 +23,6 @@ export const ArchivedHeader = () => {
     },
     headerTitle: {
       fontSize: 18,
-      fontWeight: 'bold',
       color: '#333',
       fontFamily: 'OxygenMono'
     },

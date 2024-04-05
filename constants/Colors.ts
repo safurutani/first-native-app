@@ -8,7 +8,7 @@ export default {
     text: '#000',
     background: '#fff',
     tint: tealColor,
-    tabIconDefault: '#ccc',
+    tabIconDefault: '#8E8E8F',
     tabIconSelected: tealColor,
   },
   dark: {
