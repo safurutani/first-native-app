@@ -30,8 +30,8 @@ export const ArchivedGame: React.FC<ArchivedGameProps> = ({ game, onPress }) => 
     return (
         <View style={[styles.container, { pointerEvents: modalVisible ? 'none' : 'auto' }]}>
             <View style={styles.topLine}>
-                <Pressable onPress={()=>handlePress(game.id)}>
-                    <FontAwesome name="trash" size={20} style={{marginLeft: 18}} />
+                <Pressable style={styles.trashButton} onPress={()=>handlePress(game.id)}>
+                    <FontAwesome name="trash" size={24} />
                 </Pressable>
                 <Text style={styles.date}>{dateCreated}</Text>
             </View>
@@ -53,12 +53,11 @@ const styles = StyleSheet.create({
         padding: 6,
     },
     date: {
-        textAlign: 'right',
+        justifyContent: 'flex-end',
         fontSize: 12,
     },
     topLine: {
-        display: 'flex',
-        flexDirection: 'row',
+        alignItems: 'flex-end',
         justifyContent: 'space-between',
     },
     letterRow: {
@@ -82,5 +81,14 @@ const styles = StyleSheet.create({
     bold: {
         fontWeight: '600',
     },
+    trashButton: {
+        height:  48,
+        width: 48,
+        top: -8,
+        left: -4,
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute',
+    }
     
   });

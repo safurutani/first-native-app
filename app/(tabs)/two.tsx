@@ -47,13 +47,13 @@ export default function TabTwoScreen() {
       >
         <View style={styles.centered}>
           <View style={styles.modal}>
-            <Text style={{textAlign: 'center'}}>Are you sure you want to delete this game?</Text>
+            <Text style={[styles.text, {textAlign: 'center', padding: 8}]}>Are you sure you want to delete this game?</Text>
             <View style={styles.row}>
                 <Pressable style={styles.button} onPress={()=>{
                     dispatch({type: REMOVE_GAME, payload: gameId });
                     togglePopup();
-                }}><Text>Yes</Text></Pressable>
-                <Pressable style={styles.button} onPress={() => {togglePopup()}}><Text>No</Text></Pressable>
+                }}><Text style={styles.text}>Yes</Text></Pressable>
+                <Pressable style={styles.button} onPress={() => {togglePopup()}}><Text style={styles.text}>No</Text></Pressable>
             </View>
           </View>
         </View>
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
   },
   modal: {
     display: 'flex',
-    height: 120,
+    height: 200,
     width: '80%',
     backgroundColor: 'white',
     zIndex: 2,
@@ -136,18 +136,28 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 5,
     justifyContent: 'space-evenly',
+    shadowColor: 'red',
+    shadowRadius: 10,
+    shadowOpacity: .8
   },
   button: {
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: 'darkred',
     borderRadius: 5,
-    paddingHorizontal: 12,
+    paddingHorizontal: 24,
     paddingVertical: 6,
     marginTop: 8,
+    height: 48,
+    minWidth: 48,
+    justifyContent: 'center',
+    fontSize: 24,
   },
   row: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
+  text: {
+    fontSize: 20
+  }
 });

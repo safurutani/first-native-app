@@ -9,6 +9,7 @@ import { Dispatch } from '@reduxjs/toolkit';
 import CustomHeader from '@/components/InfoHeader';
 import { useNavigation } from 'expo-router';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { useFonts } from 'expo-font';
 
 interface GameScreenProps {
   route: any
@@ -23,7 +24,6 @@ export default function GameScreen({route}: {route: any}) {
   const [isVisible, setIsVisible] = useState(false);
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
   const [foundWords, setFoundWords] = useState<string[]>(game.foundWords);
-  const criticalLetter = selectedLetters[selectedLetters.length - 1];
   const dispatch = useDispatch<Dispatch<GameAction>>();
   const state = useSelector((state: RootState) => state);
   const url = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
@@ -47,10 +47,6 @@ export default function GameScreen({route}: {route: any}) {
     });
   }, [navigation]);
 
-  const buttonContainer = [
-    Platform.OS === 'android' && styles.androidButtonContainer,
-    Platform.OS === 'web' && styles.buttonContainer
-  ];
   const addedScoreContainer = [
     Platform.OS === 'android' && styles.androidAddedScore,
     Platform.OS === 'web' && styles.addedScore,
@@ -169,11 +165,11 @@ export default function GameScreen({route}: {route: any}) {
           
           <Text style={errorMessageStyle}>{errorMessage}</Text>
           <View>
-          <Text style={styles.currentWord}>{currentWord}</Text>
+            <Text style={styles.currentWord}>{currentWord}</Text>
           </View>
           
           <LetterPyramid letters={game.letters +game.criticalLetter} letter={''} handleLetterPress={handleLetterPress}/>
-          <View style={buttonContainer}>
+          <View style={styles.buttonContainer}>
             <View style={styles.editButtonContainer}>
               <Pressable style={styles.button} onPress={clearCurrentWord}>
                 <Text style={styles.text}>Clear</Text>
@@ -219,6 +215,7 @@ const styles = StyleSheet.create({
   scoreContainer: {
     display: 'flex',
     flexDirection: 'row',
+    marginTop: -20,
   },
   error: {
     color: 'darkred',
@@ -257,10 +254,14 @@ const styles = StyleSheet.create({
     borderColor: '#649B92',
     borderRadius: 5,
     width: 100,
+    height: 48,
     textAlign: 'center',
     justifyContent: 'center',
     userSelect: 'none',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    shadowColor: '#006B61',
+    shadowRadius: 8,
+    shadowOpacity: 0.5,
   },
   editButtonContainer: {
     display: 'flex',
@@ -271,14 +272,11 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     width: 400,
-    margin: 0,
-  },
-  androidButtonContainer: {
-    width: 400,
-    margin: 0,
+    marginBottom: 30,
   },
   submitContainer: {
     alignItems: 'center',
+    marginTop: 20,
   },
   foundWords: {
     margin: 2,
@@ -298,9 +296,12 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 8,
     borderWidth: 1,
-    marginTop: 20,
+    marginTop: 0,
     minHeight: 40,
-    maxHeight: 180,
+    maxHeight: 160,
     backgroundColor: 'white',
+    shadowColor: '#006B61',
+    shadowRadius: 8,
+    shadowOpacity: 0.5,
   }
 });

@@ -21,7 +21,6 @@ export default function TabOneScreen() {
   
   const [inputLetters, setInputLetters] = useState('');
   const [criticalLetter, setCriticalLetter] = useState('');
-  const [selectedLetters, setSelectedLetters] = useState('');
   const navigation = useNavigation<StackNavigationProp<any>>();
   const state = useSelector((state: RootState) => state.game) ?? {games: []};
   const dispatch = useDispatch<Dispatch<GameAction>>();
@@ -137,20 +136,20 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     margin: 10,
     width: 140,
-    height: 30,
+    height: 48,
     textAlign: 'center',
-    fontSize: 18,
+    fontSize: 22,
   },
   criticalLetterInput: {
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 5,
     margin: 10,
-    width: 40,
-    height: 30,
+    width: 48,
+    height: 48,
     textAlign: 'center',
     justifyContent: 'center',
-    fontSize: 18,
+    fontSize: 22,
     backgroundColor: 'gold',
   },
   searchWrapper: {
@@ -188,7 +187,7 @@ const styles = StyleSheet.create({
   },
   smithButton: {
     width: 160,
-    height: "auto",
+    height: 48,
     borderColor: 'blue',
     justifyContent: 'center',
     backgroundColor: '#006B61',
@@ -196,7 +195,7 @@ const styles = StyleSheet.create({
     padding: 8,
     marginHorizontal:'auto',
     borderRadius: 5,
-    
+    alignItems: 'center',
   },
   smithButtonImage: {
     marginLeft: 6,

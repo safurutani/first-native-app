@@ -1,5 +1,5 @@
-import { Reducer, applyMiddleware, configureStore } from '@reduxjs/toolkit';
-import rootReducer, { GameAction, GameState, RootState } from './reducers';
+import { configureStore } from '@reduxjs/toolkit';
+import rootReducer, { RootState } from './reducers';
 import { loadState, saveState } from './storage';
 import { persistStore, persistReducer, FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
