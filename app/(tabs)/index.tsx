@@ -41,7 +41,7 @@ export default function TabOneScreen() {
   };
   const  generateUniqueId = () => {
     const timeStamp = Date.now().toString(36);
-    const randomNum = Math.random().toString(36).substr(2);
+    const randomNum = Math.random().toString(36).substring(2);
     return timeStamp + randomNum;
   };
 
@@ -63,9 +63,13 @@ export default function TabOneScreen() {
         return sortedGameLetters === sortedInputLetters && game.criticalLetter === criticalLetter;
       });
       if (isDuplicate) {
-          alert("A game with this combination of letters already exists.")
+          alert("A game with this combination of letters already exists.");
           return;
-        }
+      }
+    }
+    if (!/[a-zA-Z]*/.test(inputLetters) || !/^[a-zA-Z]*$/.test(criticalLetter)) {
+      alert("Please only enter letters");
+      return;
     }
     
     const newGame = {
@@ -93,7 +97,7 @@ export default function TabOneScreen() {
           <View style={styles.searchWrapper}>
             <Text accessibilityLabel='Enter 6 unique letters' style={styles.prompt}>Enter 6 unique letters:</Text>
             <TextInput style={styles.letterInput} value={inputLetters} maxLength={6} autoCapitalize='characters'
-          onChangeText={handleInputChange}/>
+          onChangeText={handleInputChange} autoFocus={true} />
             <Text accessibilityLabel='Enter 1 unique critical letter' style={styles.prompt}>Enter 1 unique critical letter:</Text>
             <TextInput style={styles.criticalLetterInput} value={criticalLetter} maxLength={1} autoCapitalize='characters'
           onChangeText={handleCriticalInputChange}/>
