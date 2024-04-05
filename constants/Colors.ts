@@ -12,10 +12,10 @@ export default {
     tabIconSelected: tealColor,
   },
   dark: {
-    text: '#fff',
-    background: '#000',
-    tint: tintColorDark,
-    tabIconDefault: '#ccc',
-    tabIconSelected: tintColorDark,
+    text: '#000',
+    background: '#2C3E50',
+    
+    tabIconDefault: '#fff',
+    tabIconSelected: lightMint,
   },
 };
