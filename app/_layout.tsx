@@ -24,6 +24,7 @@ export default function RootLayout() {
     OxygenMono: require('../assets/fonts/OxygenMono-Regular.ttf'),
     ...FontAwesome.font,
   });
+  const colorScheme = useColorScheme();
   React.useEffect(() => {
     const loadFonts = async () => {
       await SplashScreen.hideAsync();
@@ -45,7 +46,7 @@ export default function RootLayout() {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-      <ThemeProvider value={DefaultTheme}>
+      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack.Navigator initialRouteName="(tabs)">
           <Stack.Screen name="(tabs)" component={TabLayout} options={{ headerShown: false}} />
           <Stack.Screen name="GameScreen" component={GameScreen} options={{ headerTitle: 'Wordsmith', headerTitleAlign: 'center',
