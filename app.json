@@ -3,7 +3,7 @@
     "name": "first-native-app",
     "slug": "first-native-app",
     "version": "1.1.3",
-    "versionCode": 54,
+    "versionCode": 5,
     "orientation": "portrait",
     "icon": "./assets/images/wordsmith app icon.jpg",
     "scheme": "myapp",
@@ -28,7 +28,7 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "versionCode": 54,
+      "versionCode": 5,
       "package": "com.bluesara24.wordsmith",
       "userInterfaceStyle": "light"
     },
