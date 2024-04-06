@@ -97,10 +97,10 @@ export default function TabOneScreen() {
           <View style={styles.searchWrapper}>
             <Text accessibilityLabel='Enter 6 unique letters' style={styles.prompt}>Enter 6 unique letters:</Text>
             <TextInput style={styles.letterInput} value={inputLetters} maxLength={6} autoCapitalize='characters'
-          onChangeText={handleInputChange} autoFocus={true} />
+          onChangeText={handleInputChange} autoFocus={true} placeholder='ABCDEF' />
             <Text accessibilityLabel='Enter 1 unique critical letter' style={styles.prompt}>Enter 1 unique critical letter:</Text>
             <TextInput style={styles.criticalLetterInput} value={criticalLetter} maxLength={1} autoCapitalize='characters'
-          onChangeText={handleCriticalInputChange}/>
+          onChangeText={handleCriticalInputChange} placeholder='G'/>
           </View>
         </View>
         <View style={styles.buttonContainer}>
