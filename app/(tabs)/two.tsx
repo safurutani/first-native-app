@@ -66,7 +66,7 @@ export default function TabTwoScreen() {
         renderItem={({ item, index}) => (
         <Pressable 
           onPress={()=> {
-            navigation.navigate('GameScreen', {game: item});
+            navigation.navigate('gamescreen', {game: item});
             console.log(JSON.stringify(item));
           }}
           style={styles.archivedGame}

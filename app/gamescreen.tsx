@@ -9,7 +9,6 @@ import { Dispatch } from '@reduxjs/toolkit';
 import CustomHeader from '@/components/InfoHeader';
 import { useNavigation } from 'expo-router';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { useFonts } from 'expo-font';
 
 interface GameScreenProps {
   route: any
@@ -27,6 +26,7 @@ export default function GameScreen({route}: {route: any}) {
   const dispatch = useDispatch<Dispatch<GameAction>>();
   const state = useSelector((state: RootState) => state);
   const url = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
+  const blacklist = require('../constants/blacklistedWords.json').blacklist;
   const navigation = useNavigation<StackNavigationProp<any>>();
 
   useEffect(() => {
@@ -95,6 +95,11 @@ export default function GameScreen({route}: {route: any}) {
     if (!currentWord.includes(game.criticalLetter)) {
       longErrorMessage = true;
       setErrorMessage("You did not smith with the critical letter");
+      return;
+    }
+    if (blacklist.some((word: string) => currentWord.includes(word.toUpperCase()))) {
+      setErrorMessage("This word does not exist in our library");
+      setCurrentWord("");
       return;
     }
     const apiUrl = url + currentWord;  

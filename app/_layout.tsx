@@ -7,7 +7,7 @@ import * as SplashScreen from 'expo-splash-screen';
 
 import { useColorScheme } from '@/components/useColorScheme';
 import TabLayout from './(tabs)/_layout';
-import GameScreen from './GameScreen';
+import GameScreen from './gamescreen';
 import { Provider } from 'react-redux';
 import { store, persistor } from './store';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -51,7 +51,7 @@ export default function RootLayout() {
         <Stack.Navigator initialRouteName="(tabs)">
           <Stack.Screen name="(tabs)" component={TabLayout} options={{ headerShown: false, }} />
           <Stack.Screen
-              name="GameScreen"
+              name="gamescreen"
               component={GameScreen}
               options={({ navigation }) => ({
                 headerTitle: 'Wordsmith',

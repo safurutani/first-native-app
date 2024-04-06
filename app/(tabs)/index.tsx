@@ -85,7 +85,7 @@ export default function TabOneScreen() {
     setInputLetters('');
     setCriticalLetter('');
     Keyboard.dismiss();
-    navigation.navigate('GameScreen', {selectedLetters: inputLetters + criticalLetter, game: newGame});
+    navigation.navigate('gamescreen', {selectedLetters: inputLetters + criticalLetter, game: newGame});
   };
 
   return (
