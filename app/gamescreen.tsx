@@ -26,7 +26,7 @@ export default function GameScreen({route}: {route: any}) {
   const dispatch = useDispatch<Dispatch<GameAction>>();
   const state = useSelector((state: RootState) => state);
   const url = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
-  const blacklist = require('../constants/blacklistedWords.json').blacklist;
+  const blacklist = require('./constants/blacklistedWords.json').blacklist;
   const navigation = useNavigation<StackNavigationProp<any>>();
 
   useEffect(() => {
