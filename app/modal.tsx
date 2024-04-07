@@ -16,7 +16,7 @@ export default function ModalScreen() {
         </View>
         <View style={styles.centered}>
           <FontAwesome name="circle" size={8} style={styles.bullet}>
-            <Text style={styles.text}>  Choose 7 unique letters, 1 will be a "critical" letter</Text>
+            <Text style={styles.text}>  Choose 7 unique letters, 1 will be the "critical" letter</Text>
           </FontAwesome>
         </View>
         <View style={styles.centered}>
