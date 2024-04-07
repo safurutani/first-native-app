@@ -2,15 +2,15 @@
   "expo": {
     "name": "WordSmith",
     "slug": "WordSmith",
-    "version": "1.1.3",
+    "version": "1.2.3",
     "versionCode": 6,
     "orientation": "portrait",
-    "icon": "./assets/images/wordsmith app icon.jpg",
+    "icon": "./assets/images/wordsmith app icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "displayName": "WordSmith",
     "splash": {
-      "image": "./assets/images/wordsmith app icon.jpg",
+      "image": "./assets/images/wordsmith app icon.png", 
       "resizeMode": "contain",
       "backgroundColor": "#006B61"
     },
@@ -25,7 +25,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/wordsmith app icon.jpg",
+        "foregroundImage": "./assets/images/wordsmith app icon.png",
         "backgroundColor": "#006B61"
       },
       "versionCode": 6,
