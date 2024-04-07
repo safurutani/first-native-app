@@ -1,7 +1,7 @@
 import { Keyboard, StyleSheet, TextInput, Pressable } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import { FontAwesome } from '@expo/vector-icons';
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -25,6 +25,15 @@ export default function TabOneScreen() {
   const state = useSelector((state: RootState) => state.game) ?? {games: []};
   const dispatch = useDispatch<Dispatch<GameAction>>();
   
+  useEffect(()=> {
+    console.log(state.games.length);
+    if (state.games.length == 0) {
+      setTimeout(() => {
+        navigation.navigate('modal');
+      }, 10);
+    }
+  }, [])
+
   useLayoutEffect(()=> {
     navigation.setOptions({
       headerRight: () => (

@@ -5,7 +5,7 @@ import { RootState } from '@/app/store';
 export const ArchivedHeader = () => {
     const state = useSelector((state: RootState) => state.game);
     var singular = "Game";
-    if (state.games.length > 1) {
+    if (state.games.length > 1 || state.games.length == 0) {
       singular = "Games";
     }
 
