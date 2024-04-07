@@ -60,7 +60,7 @@ export default function ModalScreen() {
         </View>
         <View style={styles.centered}>
           <FontAwesome name="circle" size={8} style={styles.bullet}>
-            <Text style={styles.text}>  Words using all 7 letters gain a bonus 7 points</Text>
+            <Text style={styles.text}>  Words using all 7 letters gain 7 bonus points</Text>
           </FontAwesome>          
         </View>
       </View>
