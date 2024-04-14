@@ -72,7 +72,7 @@ export default function ModalScreen() {
               <Text style={[styles.letters, styles.bold]}>ACHILT</Text>
               <Text style={[styles.critical, styles.letters, styles.bold]}>E</Text>
             </View>
-            <Text style={[styles.letters, styles.bold]}>TILT = 1 point</Text>
+            <Text style={[styles.letters, styles.bold]}>LATE = 1 point</Text>
             <Text style={[styles.letters, styles.bold]}>CLEAT = 5 points</Text>
             <Text style={[styles.letters, styles.bold]}>ATHLETE = 7 points</Text>
             <Text style={[styles.letters, styles.bold]}>ATHLETIC = 15 points</Text>

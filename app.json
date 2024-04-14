@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "WordSmith",
-    "slug": "WordSmith",
+    "slug": "first-native-app",
     "version": "1.2.3",
     "versionCode": 6,
     "orientation": "portrait",
@@ -46,7 +46,9 @@
     "extra": {
       "router": {
         "origin": false
-      
+      },
+      "eas": {
+        "projectId": "ed14c925-2c8d-4f9a-8cee-fae3ce29e394"
       }
     }
   }
