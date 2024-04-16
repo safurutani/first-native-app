@@ -60,7 +60,7 @@ export default function TabTwoScreen() {
       </Modal>
       <FlatList 
         style={styles.listContainer}
-        data={state.games}
+        data={state.games.reverse()}
         showsVerticalScrollIndicator={false}
         keyExtractor={(item, index) => index.toString()} 
         renderItem={({ item, index}) => (
