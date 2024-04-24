@@ -88,9 +88,12 @@ const gameReducer: Reducer<GameState, GameAction> = (state:GameState = initialSt
           ...state,
           games: action.payload.games,
         }
-    default:
-      return state;
+      default:
+          
+        return state;
+        
   }
+  
 };
 
 const rootReducer: Reducer<{ game: GameState; }, GameAction, Partial<{ game: never; }>> = combineReducers({

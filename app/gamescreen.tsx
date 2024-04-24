@@ -9,8 +9,6 @@ import { Dispatch } from '@reduxjs/toolkit';
 import CustomHeader from '@/components/InfoHeader';
 import { useNavigation } from 'expo-router';
 import { StackNavigationProp } from '@react-navigation/stack';
-import blacklist from '../blacklistedWords.json'
-
 
 interface GameScreenProps {
   route: any
@@ -29,7 +27,7 @@ export default function GameScreen({route}: {route: any}) {
   const state = useSelector((state: RootState) => state);
   const url = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
   const navigation = useNavigation<StackNavigationProp<any>>();
-
+  var wordList = [];
   useEffect(() => {
     if (points !== 0) {
       setIsVisible(true);
@@ -47,7 +45,7 @@ export default function GameScreen({route}: {route: any}) {
       ),
     });
   }, [navigation]);
-
+  
   const addedScoreContainer = [
     Platform.OS === 'android' && styles.androidAddedScore,
     Platform.OS === 'web' && styles.addedScore,
@@ -98,21 +96,15 @@ export default function GameScreen({route}: {route: any}) {
       setErrorMessage("You did not smith with the critical letter");
       return;
     }
-    if (blacklist.blacklist.some((word: string) => currentWord.includes(word.toUpperCase()))) {
-      setErrorMessage("This word does not exist in our library");
-      setCurrentWord("");
-      return;
-    }
-    const apiUrl = url + currentWord;  
-    fetch(apiUrl)
+    
+    fetch('https://gist.githubusercontent.com/safurutani/11dca500cd1ce050913805ac76c6a0e8/raw/6fa9a55a8db2468b987e800a1a2b9bc56708e7d4/wordsmithWords')
       .then(response => response.json())
       .then(data => {
-        if (data.title == "No Definitions Found") {
-          longErrorMessage = false;
+        if (!data.words.includes(currentWord.toLowerCase())) {
           setErrorMessage("This word does not exist in our library");
           setCurrentWord("");
+          return;
         }
-        else {
           const wordScore = scoreWord(currentWord, checkPangram(currentWord));
           const updatedFoundWords = [...foundWords, currentWord];
           const updatedTotalScore = totalScore + wordScore;
@@ -121,18 +113,18 @@ export default function GameScreen({route}: {route: any}) {
           }, 5000);
           setFoundWords(updatedFoundWords);
           setTotalScore(updatedTotalScore);
-        
+
           dispatch({ type: UPDATE_SCORE, payload: { id: game.id, score: updatedTotalScore } });
           dispatch({ type: UPDATE_FOUND_WORDS, payload: { id: game.id, foundWords: updatedFoundWords } });
           setErrorMessage("");
           setCurrentWord("");
-        }
       })
-      .catch(error=> {
+      .catch(error => {
         console.log(error);
         setCurrentWord("");
         return;
-      })
+      });
+
     
   };
   const scoreWord = (word: string, pangram: boolean) => { 
