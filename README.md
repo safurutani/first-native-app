@@ -39,4 +39,3 @@ To get started with WordSmith, follow these steps:
 - Redux
 - AsyncStorage
 - TypeScript
-- [Free Dictionary API](https://dictionaryapi.dev/)
