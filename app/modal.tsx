@@ -41,7 +41,7 @@ export default function ModalScreen() {
         </View>
         <View style={styles.centered}>
           <FontAwesome name="circle" size={8} style={styles.bullet}>
-            <Text style={styles.text}>  Words must be in the English dictionary</Text>
+            <Text style={styles.text}>  WordSmith uses a modified Scrabble dictionary without offensive and vulgar words </Text>
           </FontAwesome>   
         </View>
       </View>

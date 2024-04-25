@@ -56,6 +56,7 @@ export default function RootLayout() {
               options={({ navigation }) => ({
                 headerTitle: 'Wordsmith',
                 headerTitleAlign: 'center',
+                headerTitleStyle:{fontFamily: 'OxygenMono'},
                 headerLeft: () => (
                   <TouchableOpacity style={styles.back} onPress={() => navigation.goBack()}>
                      <Ionicons name="arrow-back" size={24} color="black" />
