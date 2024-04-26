@@ -15,6 +15,7 @@ interface ArchivedGameProps {
         criticalLetter: string;
         foundWords: string[];
         dateCreated: string;
+        possibleWords: number;
       };
     onPress: any
 }
@@ -40,7 +41,7 @@ export const ArchivedGame: React.FC<ArchivedGameProps> = ({ game, onPress }) => 
                 <Text style={[styles.critical, styles.text, styles.bold]}>{criticalLetter}</Text>
             </View>
             <View style={styles.row}>
-                <Text style={styles.text}>Words: {foundWords.length}</Text>
+                <Text style={styles.text}>{foundWords.length}/{game.possibleWords} Words</Text>
                 <Text style={styles.text}>Score: {score}</Text>
             </View>    
         </View>

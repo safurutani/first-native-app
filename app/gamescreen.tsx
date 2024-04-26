@@ -9,6 +9,7 @@ import { Dispatch } from '@reduxjs/toolkit';
 import CustomHeader from '@/components/InfoHeader';
 import { useNavigation } from 'expo-router';
 import { StackNavigationProp } from '@react-navigation/stack';
+import wordList from '../validWords.json';
 
 interface GameScreenProps {
   route: any
@@ -25,9 +26,7 @@ export default function GameScreen({route}: {route: any}) {
   const [foundWords, setFoundWords] = useState<string[]>(game.foundWords);
   const dispatch = useDispatch<Dispatch<GameAction>>();
   const state = useSelector((state: RootState) => state);
-  const url = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
   const navigation = useNavigation<StackNavigationProp<any>>();
-  var wordList = [];
   useEffect(() => {
     if (points !== 0) {
       setIsVisible(true);
@@ -96,35 +95,35 @@ export default function GameScreen({route}: {route: any}) {
       setErrorMessage("You did not smith with the critical letter");
       return;
     }
-    
-    fetch('https://gist.githubusercontent.com/safurutani/11dca500cd1ce050913805ac76c6a0e8/raw/6fa9a55a8db2468b987e800a1a2b9bc56708e7d4/wordsmithWords')
-      .then(response => response.json())
-      .then(data => {
-        if (!data.words.includes(currentWord.toLowerCase())) {
-          setErrorMessage("This word does not exist in our library");
-          setCurrentWord("");
-          return;
-        }
-          const wordScore = scoreWord(currentWord, checkPangram(currentWord));
-          const updatedFoundWords = [...foundWords, currentWord];
-          const updatedTotalScore = totalScore + wordScore;
-          setTimeout(() => {
-            setIsVisible(false);
-          }, 5000);
-          setFoundWords(updatedFoundWords);
-          setTotalScore(updatedTotalScore);
-
-          dispatch({ type: UPDATE_SCORE, payload: { id: game.id, score: updatedTotalScore } });
-          dispatch({ type: UPDATE_FOUND_WORDS, payload: { id: game.id, foundWords: updatedFoundWords } });
-          setErrorMessage("");
-          setCurrentWord("");
-      })
-      .catch(error => {
+    if (!wordList.words.some((word:string) => word == currentWord.toLowerCase())) {
+      longErrorMessage = false;
+      setErrorMessage("This word does not exist in our library");
+      setCurrentWord("");
+      return;
+    }
+      const wordScore = scoreWord(currentWord, checkPangram(currentWord));
+      const updatedFoundWords = [...foundWords, currentWord];
+      const updatedTotalScore = totalScore + wordScore;
+      
+      setTimeout(() => {
+        setIsVisible(false);
+      }, 5000);
+      
+      
+      try {
+      dispatch({ type: UPDATE_SCORE, payload: { id: game.id, score: updatedTotalScore } });
+      }
+      catch (error) {
         console.log(error);
+        setErrorMessage("");
         setCurrentWord("");
         return;
-      });
-
+      }
+      dispatch({ type: UPDATE_FOUND_WORDS, payload: { id: game.id, foundWords: updatedFoundWords } });
+      setFoundWords(updatedFoundWords);
+      setTotalScore(updatedTotalScore);
+      setErrorMessage("");
+      setCurrentWord("");
     
   };
   const scoreWord = (word: string, pangram: boolean) => { 
@@ -182,20 +181,25 @@ export default function GameScreen({route}: {route: any}) {
               </Pressable>
             </View>
           </View>
-          <FlatList 
-            data={foundWords} 
-            style={styles.foundWordContainer} 
-            contentContainerStyle={styles.flexRow}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({item, index}) => (
-              <View>
-                <Text style={styles.foundWords} key={index}>
-                  {item}{'  \u2022 '}
-                </Text>
-              </View>
-              
-            )}>            
-          </FlatList>
+          <View style={styles.bottomContainer}>
+            <Text style={styles.wordCount}>{foundWords.length}/{game.possibleWords}</Text>
+            <FlatList 
+              data={foundWords} 
+              style={styles.foundWordContainer} 
+              contentContainerStyle={styles.flexRow}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={({item, index}) => (
+                <View>
+                  <Text style={styles.foundWords} key={index}>
+                    {item}{'  \u2022 '}
+                  </Text>
+                </View>
+                
+              )}>            
+            </FlatList>
+          </View>
+          
+          
         </>
       )}   
     </View>
@@ -217,18 +221,18 @@ const styles = StyleSheet.create({
   },
   error: {
     color: 'darkred',
-    height: 40,
+    height: 30,
     fontSize: 24,
     fontWeight: '500',
   },
   androidError: {
     color: 'darkred',
-    height: 40,
+    height: 30,
     fontSize: 20,
     fontWeight: '500',
   },
   currentWord: {
-    height: 60,
+    height: 40,
     fontSize: 30,
   },
   text: {
@@ -238,6 +242,7 @@ const styles = StyleSheet.create({
   centeredText: {
     flex: 1,
     justifyContent: 'center',
+    
   },
   addedScore: {
     position: 'absolute',
@@ -283,6 +288,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap'
   },
+  wordCount: {
+    backgroundColor:'white',
+    alignSelf: 'flex-end',
+    borderRadius: 5,
+    padding: 4,
+    marginRight: 15,
+    marginBottom: 4,
+  },
   foundWordContainer: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -295,11 +308,13 @@ const styles = StyleSheet.create({
     padding: 8,
     borderWidth: 1,
     marginTop: 0,
-    minHeight: 40,
     maxHeight: 160,
     backgroundColor: 'white',
     shadowColor: '#006B61',
     shadowRadius: 8,
     shadowOpacity: 0.5,
-  }
+  },
+  bottomContainer: {
+    height: 180,
+  },
 });

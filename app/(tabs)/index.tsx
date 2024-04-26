@@ -11,6 +11,7 @@ import { RootState } from '../reducers';
 import { saveState } from '../storage';
 import { Dispatch } from '@reduxjs/toolkit';
 import CustomHeader from '@/components/InfoHeader';
+import wordList from '../../validWords.json';
 
 
 export default function TabOneScreen() {
@@ -76,20 +77,39 @@ export default function TabOneScreen() {
           return;
       }
     }
-    if (!/[a-zA-Z]*/.test(inputLetters) || !/^[a-zA-Z]*$/.test(criticalLetter)) {
+    if (!/[A-Z]{6}/.test(inputLetters) || !/^[A-Z]/.test(criticalLetter)) {
       alert("Please only enter letters");
       return;
     }
-    
+    let possibleWordsList = wordList.words.filter((word:string) => {
+      const wordLetters = word.split('');
+      if (wordLetters.indexOf(criticalLetter.toLowerCase()) == -1) {
+        return false;
+      }
+      else {
+        return wordLetters.every(letter => (inputLetters.toLowerCase() + criticalLetter.toLowerCase()).includes(letter))
+      }
+    });
+    if (possibleWordsList.length == 0) {
+      alert("You are trying to create an impossible game. No words exist for this combination of letters.");
+      return;
+    }
     const newGame = {
       id: generateUniqueId(),
       score: 0,
       letters: inputLetters,
       criticalLetter: criticalLetter,
       foundWords: [],
-      dateCreated: formattedDate
+      dateCreated: formattedDate,
+      possibleWords: possibleWordsList.length,
     };
-    dispatch({type: ADD_GAME, payload: newGame});
+    try {
+      dispatch({type: ADD_GAME, payload: newGame});
+    }
+    catch (error) {
+      console.log("Dispatch error: ", error)
+    }
+    
     saveState(state.games);
     setInputLetters('');
     setCriticalLetter('');
@@ -106,10 +126,10 @@ export default function TabOneScreen() {
           <View style={styles.searchWrapper}>
             <Text accessibilityLabel='Enter 6 unique letters' style={styles.prompt}>Enter 6 unique letters:</Text>
             <TextInput style={styles.letterInput} value={inputLetters} maxLength={6} autoCapitalize='characters'
-          onChangeText={handleInputChange} autoFocus={true} placeholder='ABCDEF' />
+          onChangeText={handleInputChange} autoFocus={true} placeholder='ABCDEF' placeholderTextColor={'gray'}/>
             <Text accessibilityLabel='Enter 1 unique critical letter' style={styles.prompt}>Enter 1 unique critical letter:</Text>
             <TextInput style={styles.criticalLetterInput} value={criticalLetter} maxLength={1} autoCapitalize='characters'
-          onChangeText={handleCriticalInputChange} placeholder='G'/>
+          onChangeText={handleCriticalInputChange} placeholder='G' placeholderTextColor={'gray'}/>
           </View>
         </View>
         <View style={styles.buttonContainer}>

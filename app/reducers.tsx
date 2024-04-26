@@ -7,6 +7,7 @@ export interface Game {
   criticalLetter: string;
   foundWords: string[];
   dateCreated: string;
+  possibleWords: number;
 }
 
 export interface GameState {

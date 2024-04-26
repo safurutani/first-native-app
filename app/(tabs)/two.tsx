@@ -11,7 +11,10 @@ import { LOAD_GAME_STATE, REMOVE_GAME } from '../reducers';
 import CustomHeader from '@/components/InfoHeader';
 
 export default function TabTwoScreen() {
-  const state = useSelector((state: RootState) => state.game) ?? {games:[]};
+  const state = useSelector((state: RootState) => ({
+    ...state.game,
+    games: state.game.games.slice().reverse(),
+  }));;
   const navigation = useNavigation<StackNavigationProp<any>>();
   const dispatch = useDispatch();
   const [popupVisible, setPopupVisible] = useState(false);
@@ -60,7 +63,7 @@ export default function TabTwoScreen() {
       </Modal>
       <FlatList 
         style={styles.listContainer}
-        data={state.games.reverse()}
+        data={state.games}
         showsVerticalScrollIndicator={false}
         keyExtractor={(item, index) => index.toString()} 
         renderItem={({ item, index}) => (

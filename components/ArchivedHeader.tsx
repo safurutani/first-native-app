@@ -22,7 +22,7 @@ export const ArchivedHeader = () => {
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: 'white',
-      paddingVertical: 8,
+      paddingVertical: 4,
     },
     headerTitle: {
       fontSize: 18,

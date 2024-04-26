@@ -2,8 +2,8 @@
   "expo": {
     "name": "WordSmith",
     "slug": "first-native-app",
-    "version": "1.2.3",
-    "versionCode": 7,
+    "version": "1.2.4",
+    "versionCode": 8,
     "orientation": "portrait",
     "icon": "./assets/images/wordsmith app icon.png",
     "scheme": "myapp",
@@ -19,7 +19,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "versionCode": 7,
+      "versionCode": 8,
       "package": "com.bluesara24.wordsmith",
       "userInterfaceStyle": "light"
     },
@@ -28,7 +28,7 @@
         "foregroundImage": "./assets/images/wordsmith app icon.png",
         "backgroundColor": "#006B61"
       },
-      "versionCode": 7,
+      "versionCode": 8,
       "package": "com.bluesara24.wordsmith",
       "userInterfaceStyle": "light"
     },

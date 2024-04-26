@@ -89,8 +89,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start'
   },
   block: {
-    width: 'auto',
-    maxWidth: '90%',
+    maxWidth: 400,
     marginHorizontal: 'auto',
     height: 'auto',
   },
