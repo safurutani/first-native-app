@@ -28,6 +28,7 @@ export default function TabLayout() {
       headerTitleAlign: 'center',
       headerTitleStyle:{fontFamily: 'OxygenMono'},
       tabBarLabelStyle: {fontFamily: 'OxygenMono'},
+      tabBarHideOnKeyboard: true
     })}>
       <Tab.Screen name="index" component={TabOneScreen} options={{ title: 'New WordSmith'}} />
       <Tab.Screen name="two" component={TabTwoScreen} options={{ title: 'Archived Games' , headerTitle: () => <ArchivedHeader /> }} />

@@ -1,4 +1,4 @@
-import { Keyboard, StyleSheet, TextInput, Pressable } from 'react-native';
+import { Keyboard, StyleSheet, TextInput, Pressable, Dimensions, KeyboardAvoidingView, Platform } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import { FontAwesome } from '@expo/vector-icons';
 import { useEffect, useLayoutEffect, useState } from 'react';
@@ -15,6 +15,7 @@ import wordList from '../../validWords.json';
 
 
 export default function TabOneScreen() {
+  
   //display curent date in the Jan 1, 2024 format
   const currentDate: Date = new Date();
   const options: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric', year: 'numeric' };
@@ -118,31 +119,37 @@ export default function TabOneScreen() {
   };
 
   return (
-    <View style={styles.container}>
-        <View style={styles.title}>
-          <Text accessibilityLabel='Smithing Materials' style={styles.title}>Smithing Materials</Text>
-        </View>        
-        <View style={styles.searchContainer}>
-          <View style={styles.searchWrapper}>
-            <Text accessibilityLabel='Enter 6 unique letters' style={styles.prompt}>Enter 6 unique letters:</Text>
-            <TextInput style={styles.letterInput} value={inputLetters} maxLength={6} autoCapitalize='characters'
-          onChangeText={handleInputChange} autoFocus={true} placeholder='ABCDEF' placeholderTextColor={'gray'}/>
-            <Text accessibilityLabel='Enter 1 unique critical letter' style={styles.prompt}>Enter 1 unique critical letter:</Text>
-            <TextInput style={styles.criticalLetterInput} value={criticalLetter} maxLength={1} autoCapitalize='characters'
-          onChangeText={handleCriticalInputChange} placeholder='G' placeholderTextColor={'gray'}/>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.container}
+      keyboardVerticalOffset={-400}
+    >
+      <View style={styles.container}>
+          <View style={styles.title}>
+            <Text accessibilityLabel='Smithing Materials' style={styles.title}>Smithing Materials</Text>
+          </View>        
+          <View style={styles.searchContainer}>
+            <View style={styles.searchWrapper}>
+              <Text accessibilityLabel='Enter 6 unique letters' style={styles.prompt}>Enter 6 unique letters:</Text>
+              <TextInput style={styles.letterInput} value={inputLetters} maxLength={6} autoCapitalize='characters'
+            onChangeText={handleInputChange} autoFocus={true} placeholder='ABCDEF' placeholderTextColor={'gray'}/>
+              <Text accessibilityLabel='Enter 1 unique critical letter' style={styles.prompt}>Enter 1 unique critical letter:</Text>
+              <TextInput style={styles.criticalLetterInput} value={criticalLetter} maxLength={1} autoCapitalize='characters'
+            onChangeText={handleCriticalInputChange} placeholder='G' placeholderTextColor={'gray'}/>
+            </View>
           </View>
-        </View>
-        <View style={styles.buttonContainer}>
-          <Pressable style={styles.smithButton} onPress={handleStartSmithing}>
-              <Text accessibilityLabel='Start Smithing' style={styles.smithText}>Start Smithing</Text>
-              <FontAwesome style={styles.smithButtonImage} name='gavel' size={20}/>
-          </Pressable>
-        </View>
- 
-    </View>
+          <View style={styles.buttonContainer}>
+            <Pressable style={styles.smithButton} onPress={handleStartSmithing}>
+                <Text accessibilityLabel='Start Smithing' style={styles.smithText}>Start Smithing</Text>
+                <FontAwesome style={styles.smithButtonImage} name='gavel' size={20}/>
+            </Pressable>
+          </View>
+  
+      </View>
+    </KeyboardAvoidingView>
   );
 }
-
+const {width, height} = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -156,7 +163,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 10,
     backgroundColor: 'white',
-    width: 400,
+    width: width * 0.98,
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
   },
@@ -191,7 +198,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: "100%",
     borderColor: 'blue',
-    width: 400,
+    width: width * 0.98,
     backgroundColor: 'white',
   },
   searchContainer: {
@@ -199,7 +206,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     height: 220,
-    maxWidth:400,
+    maxWidth: width * 0.98,
     borderWidth: 1,
     borderColor: 'white',
   },
@@ -208,7 +215,7 @@ const styles = StyleSheet.create({
     marginTop: -10,
     marginBottom: 20,
     paddingBottom: 14,
-    width: 400,
+    width: width * 0.98,
     backgroundColor: 'white',
     borderRadius: 5,
     borderWidth: 1,
