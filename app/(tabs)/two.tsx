@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect } from 'react';
-import { StyleSheet, FlatList, Pressable, Modal } from 'react-native';
+import { StyleSheet, FlatList, Pressable, Modal, Dimensions } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import { ArchivedGame } from '@/components/ArchivedGame';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -85,7 +85,7 @@ export default function TabTwoScreen() {
     </View>
   );
 }
-
+const {width, height} = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -105,10 +105,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#006B61',
     borderRadius: 5,
-    height: '85%',
+    height: height * 0.85,
     backgroundColor: 'white',
     marginVertical: 5,
-    width: 260,
+    width: width * 0.66,
+    maxWidth: 400,
     shadowColor: '#006B61',
     shadowRadius: 8,
     shadowOpacity: 0.5,
@@ -131,8 +132,8 @@ const styles = StyleSheet.create({
   },
   modal: {
     display: 'flex',
-    height: 200,
-    width: '80%',
+    height: height * .2,
+    width: width * 0.8,
     backgroundColor: 'white',
     zIndex: 2,
     borderColor: 'darkred',

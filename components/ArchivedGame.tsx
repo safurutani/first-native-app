@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet } from 'react-native';
+import { Dimensions, Pressable, StyleSheet } from 'react-native';
 import { View, Text } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import React from 'react';
@@ -47,10 +47,10 @@ export const ArchivedGame: React.FC<ArchivedGameProps> = ({ game, onPress }) => 
         </View>
     );
 }
-
 const styles = StyleSheet.create({
     container: {
-        width: 240,
+        width: '96%',
+        maxWidth: 390,
         padding: 6,
     },
     date: {

@@ -1,5 +1,5 @@
 import React, { useLayoutEffect } from 'react';
-import { View, Text, StyleSheet, Pressable, Platform, FlatList } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Platform, FlatList, Dimensions } from 'react-native';
 import { useState, useEffect } from 'react';
 import { LetterPyramid } from '@/components/LetterPyramid';
 import { useDispatch, useSelector } from 'react-redux';
@@ -205,19 +205,21 @@ export default function GameScreen({route}: {route: any}) {
     </View>
   );
 }
-
+const {width, height} = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: 24,
-    backgroundColor: '#649B92'
+    backgroundColor: '#649B92',
+    height: height,
+    minHeight: 668,
   },
   scoreContainer: {
     display: 'flex',
     flexDirection: 'row',
-    marginTop: -20,
+    marginTop: 10,
   },
   error: {
     color: 'darkred',
@@ -293,28 +295,27 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     borderRadius: 5,
     padding: 4,
-    marginRight: 15,
     marginBottom: 4,
   },
   foundWordContainer: {
     display: 'flex',
     flexWrap: 'wrap',
     flexDirection: 'column',
-    maxWidth: '95%',
-    width: 500,
+    width: width * 0.95,
+    maxWidth: 500,
     marginHorizontal: 'auto',
     borderColor: '#649B92',
     borderRadius: 5,
     padding: 8,
     borderWidth: 1,
     marginTop: 0,
-    maxHeight: 160,
     backgroundColor: 'white',
     shadowColor: '#006B61',
     shadowRadius: 8,
     shadowOpacity: 0.5,
   },
   bottomContainer: {
-    height: 180,
+    height: height * .18,
+    maxHeight: 180,
   },
 });
