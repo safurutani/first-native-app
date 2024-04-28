@@ -187,6 +187,7 @@ export default function GameScreen({route}: {route: any}) {
               data={foundWords} 
               style={styles.foundWordContainer} 
               contentContainerStyle={styles.flexRow}
+              contentInsetAdjustmentBehavior='automatic'
               keyExtractor={(item, index) => index.toString()}
               renderItem={({item, index}) => (
                 <View>
@@ -288,7 +289,7 @@ const styles = StyleSheet.create({
   },
   flexRow: {
     flexDirection: 'row',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
   },
   wordCount: {
     backgroundColor:'white',
@@ -306,16 +307,19 @@ const styles = StyleSheet.create({
     marginHorizontal: 'auto',
     borderColor: '#649B92',
     borderRadius: 5,
-    padding: 8,
+    paddingHorizontal: 8,
     borderWidth: 1,
     marginTop: 0,
     backgroundColor: 'white',
     shadowColor: '#006B61',
     shadowRadius: 8,
     shadowOpacity: 0.5,
+    marginBottom: 10,
+    overflow: 'scroll',
+    flex: 1,
   },
   bottomContainer: {
-    height: height * .18,
-    maxHeight: 180,
+    height: 180,
+    paddingBottom: 10,
   },
 });
